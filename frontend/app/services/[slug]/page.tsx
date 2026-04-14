@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -138,6 +139,22 @@ export async function generateStaticParams() {
   }))
 }
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+  const { slug } = await params
+  const service = servicesData[slug as keyof typeof servicesData]
+  if (!service) {
+    return { title: 'Услуга не найдена' }
+  }
+  return {
+    title: service.title,
+    description: service.desc,
+  }
+}
+
 export default async function ServicePage({ params }: { params: { slug: string } }) {
   const { slug } = await params
   const service = servicesData[slug as keyof typeof servicesData]
@@ -163,9 +180,9 @@ export default async function ServicePage({ params }: { params: { slug: string }
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
-            <Link href="/" className="hover:text-primary transition-colors">Главная</Link>
+            <Link href="/" prefetch={false} className="hover:text-primary transition-colors">Главная</Link>
             <ChevronRight className="w-4 h-4" />
-            <Link href="/services" className="hover:text-primary transition-colors">Услуги</Link>
+            <Link href="/services" prefetch={false} className="hover:text-primary transition-colors">Услуги</Link>
             <ChevronRight className="w-4 h-4" />
             <span className="text-foreground">{service.title}</span>
           </div>

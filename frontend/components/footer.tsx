@@ -9,12 +9,12 @@ export function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
             {/* Brand */}
             <div className="lg:col-span-1">
-              <Link href="/" className="flex items-center gap-2 mb-4">
+              <Link href="/" prefetch={false} className="flex items-center gap-2 mb-4">
                 <div className="w-8 h-8 bg-primary flex items-center justify-center rounded-sm">
                   <span className="text-primary-foreground font-bold text-sm">33</span>
                 </div>
                 <div className="leading-tight">
-                  <span className="font-bold text-foreground text-sm tracking-wide uppercase">Авто33</span>
+                  <span className="font-bold text-foreground text-sm tracking-wide uppercase">тойота33</span>
                   <p className="text-[10px] text-muted-foreground uppercase tracking-widest leading-none">Автосервис</p>
                 </div>
               </Link>
@@ -36,6 +36,7 @@ export function Footer() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
+                      prefetch={false}
                       className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                     >
                       {link.label}
@@ -58,7 +59,7 @@ export function Footer() {
                 { href: '/services/tires', label: 'Шиномонтаж' },
               ].map((service) => (
                 <li key={service.label}>
-                  <Link href={service.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  <Link href={service.href} prefetch={false} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                     {service.label}
                   </Link>
                 </li>
@@ -99,10 +100,13 @@ export function Footer() {
       <div className="bg-card py-6 border-t border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} Авто33 — ЛМС-АВТО. Все права защищены.
+            © {new Date().getFullYear()} тойота33 — ЛМС-АВТО. Все права защищены.
           </p>
           <p className="text-xs text-muted-foreground">
             г. Владимир
+          </p>
+          <p className="text-xs text-muted-foreground">
+            Разработка сайта — <a href="https://ameliq.ru" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">ameliq.ru</a>
           </p>
         </div>
       </div>

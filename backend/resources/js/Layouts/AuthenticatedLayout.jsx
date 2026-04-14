@@ -5,7 +5,7 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 
-export default function AuthenticatedLayout({ header, children }) {
+export default function AuthenticatedLayout({ header, children, extraNav }) {
     const user = usePage().props.auth.user;
 
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
@@ -24,12 +24,16 @@ export default function AuthenticatedLayout({ header, children }) {
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink
-                                    href={route('dashboard')}
-                                    active={route().current('dashboard')}
-                                >
-                                    Dashboard
-                                </NavLink>
+                                {extraNav ? (
+                                    extraNav
+                                ) : (
+                                    <NavLink
+                                        href={route('dashboard')}
+                                        active={route().current('dashboard')}
+                                    >
+                                        Панель управления
+                                    </NavLink>
+                                )}
                             </div>
                         </div>
 
@@ -132,8 +136,31 @@ export default function AuthenticatedLayout({ header, children }) {
                             href={route('dashboard')}
                             active={route().current('dashboard')}
                         >
-                            Dashboard
+                            Диалоги
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route('bookings')}
+                            active={route().current('bookings')}
+                        >
+                            Заявки
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route('clients')}
+                            active={route().current('clients')}
+                        >
+                            Клиенты
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route('prompt')}
+                            active={route().current('prompt')}
+                        >
+                            Инструкции
+                        </ResponsiveNavLink>
+                        {header && (
+                            <div className="pt-4 pb-1 border-t border-gray-200 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                                Разделы
+                            </div>
+                        )}
                     </div>
 
                     <div className="border-t border-gray-200 pb-1 pt-4">

@@ -9,15 +9,51 @@ type FormData = {
   phone: string
   service: string
   message: string
+  website: string // Honeypot field
 }
 
 export function BookingForm({ className }: { className?: string }) {
-  const [form, setForm] = useState<FormData>({ name: '', phone: '', service: '', message: '' })
+  const [form, setForm] = useState<FormData>({ name: '', phone: '', service: '', message: '', website: '' })
   const [submitted, setSubmitted] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setSubmitted(true)
+    setIsLoading(true)
+    setError(null)
+
+    let apiUrl = process.env.NEXT_PUBLIC_API_URL;
+    
+    if (!apiUrl && typeof window !== 'undefined') {
+      if (window.location.hostname === 'toyota.ameliq.ru') {
+        apiUrl = 'https://toyota-admin.ameliq.ru';
+      } else {
+        apiUrl = 'http://localhost:8000';
+      }
+    }
+
+    try {
+      const response = await fetch(`${apiUrl}/api/bookings`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify(form),
+      })
+
+      if (response.ok) {
+        setSubmitted(true)
+      } else {
+        setError('Произошла ошибка при отправке заявки. Попробуйте позже.')
+      }
+    } catch (err) {
+      setError('Ошибка сети. Проверьте подключение.')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   if (submitted) {
@@ -54,8 +90,9 @@ export function BookingForm({ className }: { className?: string }) {
             type="text"
             placeholder="Ваше имя"
             value={form.name}
+            disabled={isLoading}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
-            className="px-4 py-3 bg-white/10 border border-border rounded-sm text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-colors"
+            className="px-4 py-3 bg-white/10 border border-border rounded-sm text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-colors disabled:opacity-50"
           />
         </div>
         <div className="flex flex-col gap-1.5">
@@ -68,8 +105,9 @@ export function BookingForm({ className }: { className?: string }) {
             mask="_"
             placeholder="+7 (___) ___-__-__"
             value={form.phone}
+            disabled={isLoading}
             onValueChange={(values) => setForm({ ...form, phone: values.value })}
-            className="px-4 py-3 bg-white/10 border border-border rounded-sm text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-colors"
+            className="px-4 py-3 bg-white/10 border border-border rounded-sm text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-colors disabled:opacity-50"
           />
         </div>
       </div>
@@ -79,8 +117,9 @@ export function BookingForm({ className }: { className?: string }) {
         </label>
         <select
           value={form.service}
+          disabled={isLoading}
           onChange={(e) => setForm({ ...form, service: e.target.value })}
-          className="px-4 py-3 bg-white/10 border border-border rounded-sm text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-colors [&>option]:bg-[#1a1a1a] [&>option]:text-white"
+          className="px-4 py-3 bg-white/10 border border-border rounded-sm text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-colors [&>option]:bg-[#1a1a1a] [&>option]:text-white disabled:opacity-50"
         >
           <option value="">Выберите услугу...</option>
           <option>Техническое обслуживание (ТО)</option>
@@ -101,18 +140,37 @@ export function BookingForm({ className }: { className?: string }) {
           rows={3}
           placeholder="Опишите проблему..."
           value={form.message}
+          disabled={isLoading}
           onChange={(e) => setForm({ ...form, message: e.target.value })}
-          className="px-4 py-3 bg-white/10 border border-border rounded-sm text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-colors resize-none"
+          className="px-4 py-3 bg-white/10 border border-border rounded-sm text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-colors resize-none disabled:opacity-50"
         />
       </div>
+
+      {/* Honeypot field (hidden from humans) */}
+      <div className="hidden">
+        <input 
+          type="text" 
+          value={form.website} 
+          onChange={(e) => setForm({ ...form, website: e.target.value })} 
+          tabIndex={-1} 
+          autoComplete="off" 
+        />
+      </div>
+
+      {error && (
+        <p className="text-xs text-red-500 font-medium">
+          {error}
+        </p>
+      )}
       <p className="text-xs text-muted-foreground">
         * — поля обязательные к заполнению. Запрос обрабатывается в течение часа Пн–Пт с 8:00 до 18:00.
       </p>
       <button
         type="submit"
-        className="w-full py-3.5 bg-primary text-primary-foreground font-semibold text-sm rounded-sm hover:bg-primary/90 transition-colors tracking-wide uppercase"
+        disabled={isLoading}
+        className="w-full py-3.5 bg-primary text-primary-foreground font-semibold text-sm rounded-sm hover:bg-primary/90 transition-colors tracking-wide uppercase disabled:opacity-50 flex items-center justify-center gap-2"
       >
-        Записаться на ремонт
+        {isLoading ? 'Отправка...' : 'Записаться на ремонт'}
       </button>
     </form>
   )

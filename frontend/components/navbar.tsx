@@ -23,12 +23,12 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
+          <Link href="/" prefetch={false} className="flex items-center gap-2 group">
             <div className="w-8 h-8 bg-primary flex items-center justify-center rounded-sm">
               <span className="text-primary-foreground font-bold text-sm">33</span>
             </div>
             <div className="leading-tight">
-              <span className="font-bold text-foreground text-sm tracking-wide uppercase">Авто33</span>
+              <span className="font-bold text-foreground text-sm tracking-wide uppercase">тойота33</span>
               <p className="text-[10px] text-muted-foreground uppercase tracking-widest leading-none">Автосервис</p>
             </div>
           </Link>
@@ -39,6 +39,7 @@ export function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
+                prefetch={false}
                 className={cn(
                   'px-3 py-2 text-sm font-medium rounded-sm transition-colors',
                   pathname === link.href
@@ -62,6 +63,7 @@ export function Navbar() {
             </a>
             <Link
               href="/contacts#booking"
+              prefetch={false}
               className="px-4 py-2 bg-primary text-primary-foreground text-sm font-semibold rounded-sm hover:bg-primary/90 transition-colors"
             >
               Записаться на ремонт
@@ -87,6 +89,7 @@ export function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
+                prefetch={false}
                 onClick={() => setOpen(false)}
                 className={cn(
                   'px-3 py-3 text-sm font-medium rounded-sm transition-colors',
@@ -108,6 +111,7 @@ export function Navbar() {
               </a>
               <Link
                 href="/contacts#booking"
+                prefetch={false}
                 onClick={() => setOpen(false)}
                 className="mx-3 px-4 py-2.5 bg-primary text-primary-foreground text-sm font-semibold rounded-sm text-center"
               >

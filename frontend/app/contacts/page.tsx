@@ -57,7 +57,7 @@ export default function ContactsPage() {
       <section className="pt-32 pb-16 bg-background border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
-            <Link href="/" className="hover:text-primary transition-colors">Главная</Link>
+            <Link href="/" prefetch={false} className="hover:text-primary transition-colors">Главная</Link>
             <ChevronRight className="w-4 h-4" />
             <span className="text-foreground">Контакты</span>
           </div>
@@ -94,7 +94,7 @@ export default function ContactsPage() {
                 <div className="font-bold">Пн–Пт: 8:00–18:00, Сб: 9:00–15:00</div>
               </div>
             </div>
-            <a
+            {/* <a
               href="https://wa.me/79049555444"
               target="_blank"
               rel="noopener noreferrer"
@@ -102,7 +102,7 @@ export default function ContactsPage() {
             >
               <MessageCircle className="w-4 h-4" />
               WhatsApp
-            </a>
+            </a> */}
           </div>
         </div>
       </section>

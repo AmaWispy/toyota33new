@@ -1,0 +1,5 @@
+*.zip
+*.zip
+/frontend/out
+/frontend/out
+frontend/.env.production

@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Navbar } from '@/components/navbar'
@@ -12,6 +13,12 @@ import {
   Disc,
   ChevronRight,
 } from 'lucide-react'
+
+export const metadata: Metadata = {
+  title: 'Услуги',
+  description:
+    'Полный спектр работ Тойота33, Владимир: ТО, двигатель и диагностика, трансмиссия, ходовая, кондиционер, шиномонтаж. Оригинальные запчасти, гарантия, онлайн-запись.',
+}
 
 const serviceCategories = [
   {
@@ -118,7 +125,7 @@ export default function ServicesPage() {
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
-            <Link href="/" className="hover:text-primary transition-colors">Главная</Link>
+            <Link href="/" prefetch={false} className="hover:text-primary transition-colors">Главная</Link>
             <ChevronRight className="w-4 h-4" />
             <span className="text-foreground">Услуги</span>
           </div>
@@ -138,6 +145,7 @@ export default function ServicesPage() {
               <Link
                 key={cat.title}
                 href={`/services/${cat.slug}`}
+                prefetch={false}
                 className="flex flex-col p-8 bg-white/10 border border-border rounded-sm hover:border-primary/40 transition-colors group"
               >
                 <div className="flex items-start gap-5 mb-6">

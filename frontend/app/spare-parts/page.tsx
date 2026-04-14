@@ -1,9 +1,16 @@
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
 import { PartsBookingForm } from '@/components/parts-booking-form'
 import { ChevronRight, PackageCheck, Truck, BadgeCheck, Layers } from 'lucide-react'
+
+export const metadata: Metadata = {
+  title: 'Запчасти',
+  description:
+    'Подбор и заказ запчастей во Владимире: фильтры, расходники, тормоза, ходовая, кузов, двигатель, электрика, шины. Оригинал и проверенные аналоги, доставка, консультация.',
+}
 
 const categories = [
   {
@@ -83,7 +90,7 @@ export default function SparePartsPage() {
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
-            <Link href="/" className="hover:text-primary transition-colors">Главная</Link>
+            <Link href="/" prefetch={false} className="hover:text-primary transition-colors">Главная</Link>
             <ChevronRight className="w-4 h-4" />
             <span className="text-foreground">Запчасти</span>
           </div>
@@ -155,6 +162,7 @@ export default function SparePartsPage() {
               </p>
               <Link
                 href="/contacts#booking"
+                prefetch={false}
                 className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground font-semibold text-sm rounded-sm hover:bg-primary/90 transition-colors"
               >
                 Заказать запчасти

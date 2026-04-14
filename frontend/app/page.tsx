@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Navbar } from '@/components/navbar'
@@ -14,6 +15,11 @@ import {
   ChevronRight,
   ArrowRight,
 } from 'lucide-react'
+
+export const metadata: Metadata = {
+  description:
+    'Компания ЛМС-АВТО: более 20 лет обслуживания японских и европейских автомобилей во Владимире. Сертифицированные специалисты, оригинальные запчасти, честные цены. ТО, диагностика, ремонт. Онлайн-запись.',
+}
 
 const services = [
   {
@@ -76,7 +82,7 @@ export default function HomePage() {
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/hero-toyota.jpg"
-            alt="Автосервис Авто33"
+            alt="Автосервис тойота33"
             fill
             priority
             loading="eager"
@@ -110,6 +116,7 @@ export default function HomePage() {
             <div className="flex flex-wrap gap-4">
               <Link
                 href="/contacts#booking"
+                prefetch={false}
                 className="inline-flex items-center gap-2 px-6 py-3.5 bg-primary text-primary-foreground font-semibold rounded-sm hover:bg-primary/90 transition-colors"
               >
                 Записаться на ремонт
@@ -117,6 +124,7 @@ export default function HomePage() {
               </Link>
               <Link
                 href="/services"
+                prefetch={false}
                 className="inline-flex items-center gap-2 px-6 py-3.5 border border-border text-foreground font-medium rounded-sm hover:border-primary/50 hover:text-primary transition-colors"
               >
                 Все услуги
@@ -160,6 +168,7 @@ export default function HomePage() {
             </div>
             <Link
               href="/services"
+              prefetch={false}
               className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
             >
               Все услуги <ArrowRight className="w-4 h-4" />
@@ -171,6 +180,7 @@ export default function HomePage() {
               <Link
                 key={service.title}
                 href={service.href}
+                prefetch={false}
                 className="group flex flex-col p-6 bg-white/10 border border-border rounded-sm hover:border-primary/40 transition-all duration-300 hover:bg-white/30"
               >
                 <div className="w-10 h-10 bg-primary/10 flex items-center justify-center rounded-sm mb-5 group-hover:bg-primary/20 transition-colors">
@@ -204,6 +214,7 @@ export default function HomePage() {
               </p>
               <Link
                 href="/about"
+                prefetch={false}
                 className="inline-flex items-center gap-2 px-6 py-3 border border-primary text-primary font-semibold text-sm rounded-sm hover:bg-primary hover:text-primary-foreground transition-colors"
               >
                 Узнать больше о нас <ArrowRight className="w-4 h-4" />

@@ -1,8 +1,15 @@
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
 import { Award, Users, Wrench, ShieldCheck, Clock, ChevronRight, ArrowRight } from 'lucide-react'
+
+export const metadata: Metadata = {
+  title: 'О компании',
+  description:
+    'История ЛМС-АВТО и автосервиса Тойота33 во Владимире: от специализации Toyota–Lexus до обслуживания всех марок. Команда, этапы развития, оборудование и подход к ремонту.',
+}
 
 const team = [
   {
@@ -58,7 +65,7 @@ export default function AboutPage() {
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/about-team.jpg"
-            alt="Команда Авто33"
+            alt="Команда тойота33"
             fill
             className="object-cover"
           />
@@ -66,7 +73,7 @@ export default function AboutPage() {
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
-            <Link href="/" className="hover:text-primary transition-colors">Главная</Link>
+            <Link href="/" prefetch={false} className="hover:text-primary transition-colors">Главная</Link>
             <ChevronRight className="w-4 h-4" />
             <span className="text-foreground">О нас</span>
           </div>
@@ -205,6 +212,7 @@ export default function AboutPage() {
           </p>
           <Link
             href="/contacts#booking"
+            prefetch={false}
             className="inline-flex items-center gap-2 px-8 py-4 bg-primary-foreground text-primary font-bold rounded-sm hover:bg-primary-foreground/90 transition-colors"
           >
             Записаться <ArrowRight className="w-4 h-4" />
