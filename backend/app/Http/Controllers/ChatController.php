@@ -73,7 +73,6 @@ class ChatController extends Controller
         $systemPrompt = $systemPromptModel ? $systemPromptModel->content : "Ты — консультант официального чата автосервиса «тойота33».";
 
         $payload = [
-            'model' => 'deepseek-chat',
             'messages' => array_merge([
                 ['role' => 'system', 'content' => $systemPrompt]
             ], $history),
@@ -84,11 +83,11 @@ class ChatController extends Controller
 
         try {
             $response = Http::withHeaders([
-                'Authorization' => 'Bearer ' . env('TIMEWEB_AI_TOKEN'),
+                'Authorization' => 'Bearer ' . config('services.timeweb_ai.token'),
                 'Content-Type' => 'application/json',
             ])
             ->withoutVerifying()
-            ->post(env('TIMEWEB_AI_AGENT_URL'), $payload);
+            ->post(config('services.timeweb_ai.url'), $payload);
 
             if ($response->successful()) {
                 $aiData = $response->json();

@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'timeweb_ai' => [
+        'url' => env('TIMEWEB_AI_AGENT_URL'),
+        'token' => env('TIMEWEB_AI_TOKEN'),
+    ],
+
 ];
