@@ -37,14 +37,13 @@ const services = [
   {
     icon: Car,
     title: 'Ремонт трансмиссии',
-    desc: 'КПП, АКПП, робот, вариатор, сцепление, раздаточные коробки и мосты — любые конструкции.',
+    desc: 'КПП, АКПП, робот, вариатор, сцепление, раздаточные коробки, прочие узлы и агрегаты.',
     href: '/services/transmission',
   },
 ]
 
 const advantages = [
-  { number: '20+', label: 'Лет опыта' },
-  { number: '3', label: 'Площадки в городе' },
+  { number: '10+', label: 'Лет опыта' },
   { number: '5000+', label: 'Обслуженных авто' },
   { number: '100%', label: 'Гарантия качества' },
 ]
@@ -77,78 +76,85 @@ export default function HomePage() {
     <div className="min-h-screen">
       <Navbar />
 
-      {/* Hero */}
-      <section className="relative min-h-screen flex items-center overflow-hidden pt-16">
+      {/* Hero — Page Banner */}
+      <section className="relative flex min-h-[100svh] flex-col overflow-hidden pt-[65px]">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/hero-toyota.jpg"
-            alt="Автосервис тойота33"
+            src="/images/hero-banner.jpg"
+            alt="тойота33 — профессиональный автосервис"
             fill
             priority
             loading="eager"
-            className="object-cover"
+            className="object-cover object-center"
+            sizes="100vw"
           />
-          <div className="absolute inset-0 bg-background/75" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/60 to-transparent" />
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-          <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/20 border border-primary/30 rounded-sm mb-6">
-              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-              <span className="text-xs font-medium text-primary uppercase tracking-widest">
+        <div className="relative z-10 flex w-full flex-1 flex-col justify-between px-4 pb-16 pt-16 sm:px-10 lg:pl-40 lg:pr-8 lg:pb-[120px] lg:pt-[100px]">
+          <div className="flex max-w-[760px] flex-col gap-[62px]">
+            <div className="inline-flex w-fit items-center gap-2 rounded-[2px] border border-white/30 bg-white/30 px-3 py-[7px]">
+              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-white" />
+              <span className="text-xs font-medium leading-none tracking-wide text-white">
                 Профессиональный автосервис — все марки
               </span>
             </div>
 
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black text-foreground leading-tight text-balance mb-6">
-              Ваш автомобиль
-              <br />
-              <span className="text-primary">в надёжных</span>
-              <br />
-              руках
-            </h1>
-
-            <p className="text-lg text-muted-foreground leading-relaxed mb-8 max-w-xl">
-              Более 20 лет компания ЛМС-АВТО обслуживает японские и европейские автомобили. Сертифицированные специалисты, оригинальные запчасти, честные цены.
-            </p>
-
-            <div className="flex flex-wrap gap-4">
-              <Link
-                href="/contacts#booking"
-                prefetch={false}
-                className="inline-flex items-center gap-2 px-6 py-3.5 bg-primary text-primary-foreground font-semibold rounded-sm hover:bg-primary/90 transition-colors"
+            <div className="relative">
+              {/* White title underlay — from left page edge */}
+              <div
+                aria-hidden
+                className="hero-title-bg pointer-events-none absolute top-1/2 left-[calc(50%-50vw)] z-0 -translate-y-1/2"
               >
-                Записаться на ремонт
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link
-                href="/services"
-                prefetch={false}
-                className="inline-flex items-center gap-2 px-6 py-3.5 border border-border text-foreground font-medium rounded-sm hover:border-primary/50 hover:text-primary transition-colors"
-              >
-                Все услуги
-                <ChevronRight className="w-4 h-4" />
-              </Link>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/images/hero-title-bg.png"
+                  alt=""
+                  className="h-full w-full object-fill object-left"
+                />
+              </div>
+              <h1 className="relative z-10 text-4xl font-black leading-[1.1] tracking-tight text-[#030303] sm:text-5xl lg:text-[72px]">
+                <span className="block whitespace-nowrap">Ваш автомобиль</span>
+                <span className="block whitespace-nowrap">
+                  <span className="text-primary">в надёжных</span> руках
+                </span>
+              </h1>
             </div>
-          </div>
-        </div>
 
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10">
-          <span className="text-xs text-muted-foreground uppercase tracking-widest">Прокрутите</span>
-          <div className="w-px h-8 bg-border animate-pulse" />
+            <p className="max-w-[535px] text-base leading-relaxed text-white sm:text-lg">
+              Более 10 лет мы обслуживаем японские и европейские автомобили. Сертифицированные
+              специалисты, оригинальные запчасти, честные цены.
+            </p>
+          </div>
+
+          <div className="mt-12 flex flex-wrap items-center gap-4">
+            <Link
+              href="/contacts#booking"
+              prefetch={false}
+              className="inline-flex h-[54px] items-center gap-2 rounded-[2px] bg-white px-6 text-sm font-semibold text-[#030303] shadow-[0_4px_4px_rgba(0,0,0,0.25)] transition-opacity hover:opacity-90"
+            >
+              Записаться на ремонт
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link
+              href="/services"
+              prefetch={false}
+              className="inline-flex h-[54px] items-center gap-2 rounded-[2px] border border-[#1a1a1a] px-6 text-sm font-medium text-[#eef0f0] transition-colors hover:border-white/40 hover:text-white"
+            >
+              Все услуги
+              <ChevronRight className="h-4 w-4" />
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* Stats */}
-      <section className="bg-primary py-12">
+      <section className="bg-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
             {advantages.map((item) => (
               <div key={item.number} className="text-center">
-                <div className="text-4xl font-black text-primary-foreground">{item.number}</div>
-                <div className="text-sm font-medium text-primary-foreground/70 mt-1 uppercase tracking-wider">{item.label}</div>
+                <div className="text-4xl font-black text-black">{item.number}</div>
+                <div className="text-sm font-medium text-black/70 mt-1 uppercase tracking-wider">{item.label}</div>
               </div>
             ))}
           </div>
@@ -159,81 +165,104 @@ export default function HomePage() {
       <BrandsMarquee />
 
       {/* Services */}
-      <section className="py-24 bg-background">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6 mb-14">
-            <div>
-              <p className="text-xs font-medium text-primary uppercase tracking-widest mb-2">Что мы делаем</p>
-              <h2 className="text-4xl sm:text-5xl font-black text-foreground text-balance">Наши услуги</h2>
-            </div>
-            <Link
-              href="/services"
-              prefetch={false}
-              className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
-            >
-              Все услуги <ArrowRight className="w-4 h-4" />
-            </Link>
+      <section className="bg-background py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-10 text-center">
+            <p className="mb-2 text-xs font-medium uppercase tracking-widest text-primary">Что мы делаем</p>
+            <h2 className="text-4xl font-black text-foreground text-balance sm:text-5xl">Наши услуги</h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {services.map((service) => (
+          <div className="mx-auto max-w-5xl">
+            <div className="mb-4 flex justify-end">
               <Link
-                key={service.title}
-                href={service.href}
+                href="/services"
                 prefetch={false}
-                className="group flex flex-col p-6 bg-white/10 border border-border rounded-sm hover:border-primary/40 transition-all duration-300 hover:bg-white/30"
+                className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
               >
-                <div className="w-10 h-10 bg-primary/10 flex items-center justify-center rounded-sm mb-5 group-hover:bg-primary/20 transition-colors">
-                  <service.icon className="w-5 h-5 text-primary" />
-                </div>
-                <h3 className="font-bold text-foreground mb-2 text-balance">{service.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed flex-1">{service.desc}</p>
-                <div className="flex items-center gap-1 mt-4 text-xs font-medium text-primary opacity-0 group-hover:opacity-100 transition-opacity">
-                  Подробнее <ChevronRight className="w-3 h-3" />
-                </div>
+                Все услуги <ArrowRight className="h-4 w-4" />
               </Link>
-            ))}
+            </div>
+
+            <div className="grid grid-cols-1 justify-items-center gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {services.map((service) => (
+                <Link
+                  key={service.title}
+                  href={service.href}
+                  prefetch={false}
+                  className="group flex w-full max-w-sm flex-col items-center rounded-sm border border-border bg-white/10 p-6 text-center transition-all duration-300 hover:border-primary/40 hover:bg-white/30 sm:max-w-none"
+                >
+                  <div className="mb-5 flex h-10 w-10 items-center justify-center rounded-sm bg-primary/10 transition-colors group-hover:bg-primary/20">
+                    <service.icon className="h-5 w-5 text-primary" />
+                  </div>
+                  <h3 className="mb-2 font-bold text-foreground text-balance">{service.title}</h3>
+                  <p className="flex-1 text-sm leading-relaxed text-muted-foreground">{service.desc}</p>
+                  <div className="mt-4 flex items-center gap-1 text-xs font-medium text-primary opacity-0 transition-opacity group-hover:opacity-100">
+                    Подробнее <ChevronRight className="h-3 w-3" />
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* About strip */}
-      <section className="py-24 bg-card border-y border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <p className="text-xs font-medium text-primary uppercase tracking-widest mb-2">О компании</p>
-              <h2 className="text-4xl sm:text-5xl font-black text-foreground mb-6 text-balance">
+      {/* About — Альтернатива дилерскому сервису */}
+      <section className="relative min-h-[520px] overflow-hidden border-y border-[#1a1a1a] bg-[#0f0f0f] lg:min-h-[622px]">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/about-banner.jpg"
+            alt="Автосервис тойота33"
+            fill
+            className="object-cover object-left"
+            sizes="100vw"
+          />
+        </div>
+
+        {/* Dark gradient R→L under 1680px — keeps white text readable over the photo */}
+        <div
+          aria-hidden
+          className="about-banner-gradient pointer-events-none absolute inset-0 z-[1]"
+        />
+
+        <div className="relative z-10 flex min-h-[520px] w-full flex-col justify-center lg:min-h-[622px] lg:items-end">
+          <div className="flex w-full flex-col gap-6 bg-primary px-4 pb-[140px] pt-16 text-right sm:px-10 lg:w-[46%] lg:max-w-[888px] lg:bg-transparent lg:gap-6 lg:py-12 lg:pl-10 lg:pr-40 lg:pb-12">
+            <div className="flex flex-col gap-3 lg:pr-0">
+              <p className="text-xs font-medium uppercase tracking-widest text-white min-[1680px]:text-[#030303]">
+                О компании
+              </p>
+              <h2 className="text-3xl font-black leading-tight text-white text-balance sm:text-4xl lg:text-5xl">
                 Альтернатива дилерскому сервису
               </h2>
-              <p className="text-muted-foreground leading-relaxed mb-6">
-                Начав как специализированный сервис Toyota-Lexus, мы расширили компетенции до полного спектра японских и европейских марок. Наши механики прошли обучение в официальных дилерских центрах и знают особенности каждого автомобиля.
-              </p>
-              <p className="text-muted-foreground leading-relaxed mb-8">
-                Мы предлагаем качество дилерского обслуживания по честным ценам без лишних наценок. Всё оборудование и инструмент соответствуют требованиям производителей.
-              </p>
+            </div>
+
+            <p className="ml-auto max-w-[722px] text-sm leading-relaxed text-white sm:text-base">
+              Начав как специализированный сервис Toyota-Lexus, мы расширили компетенции до полного спектра японских и
+              европейских марок. Наши механики прошли обучение в официальных дилерских центрах и знают особенности
+              каждого автомобиля.
+            </p>
+
+            <p className="ml-auto max-w-[642px] text-sm leading-relaxed text-white sm:text-base">
+              Мы предлагаем качество дилерского обслуживания по честным ценам без лишних наценок. Всё оборудование и
+              инструмент соответствуют требованиям производителей.
+            </p>
+
+            <div className="flex justify-end pt-2">
               <Link
                 href="/about"
                 prefetch={false}
-                className="inline-flex items-center gap-2 px-6 py-3 border border-primary text-primary font-semibold text-sm rounded-sm hover:bg-primary hover:text-primary-foreground transition-colors"
+                className="inline-flex h-12 items-center gap-2 rounded-[2px] border border-[#1a1a1a] px-6 text-sm font-semibold text-white transition-colors hover:border-white/40"
               >
-                Узнать больше о нас <ArrowRight className="w-4 h-4" />
+                Узнать больше о нас
+                <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
-            <div className="relative">
-              <Image
-                src="/images/service-bay.jpg"
-                alt="Автосервис"
-                width={600}
-                height={450}
-                className="rounded-sm object-cover w-full aspect-video"
-              />
-              <div className="absolute -bottom-4 -left-4 bg-primary text-primary-foreground px-6 py-4 rounded-sm">
-                <div className="text-3xl font-black">20+</div>
-                <div className="text-xs font-medium uppercase tracking-wider opacity-90">лет опыта</div>
-              </div>
-            </div>
           </div>
+        </div>
+
+        {/* 10+ badge */}
+        <div className="absolute bottom-0 left-0 z-20 flex h-[116px] w-[172px] flex-col items-center justify-center rounded-tr-[2px] bg-primary text-primary-foreground">
+          <div className="text-3xl font-black leading-none">10+</div>
+          <div className="mt-1 text-xs font-medium uppercase tracking-wider">лет опыта</div>
         </div>
       </section>
 
@@ -268,7 +297,7 @@ export default function HomePage() {
                 Записаться на ремонт
               </h2>
               <p className="text-muted-foreground leading-relaxed mb-8">
-                Оставьте заявку и мы свяжемся с вами в течение часа. Работаем понедельник–пятница с 8:00 до 18:00.
+                Оставьте заявку и мы свяжемся с вами в течение часа. Работаем понедельник–пятница с 9:00 до 18:00.
               </p>
               <div className="flex flex-col gap-4">
                 <div className="flex items-center gap-3 text-sm text-muted-foreground">

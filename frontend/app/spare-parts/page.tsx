@@ -3,8 +3,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
+import { PageBanner } from '@/components/page-banner'
 import { PartsBookingForm } from '@/components/parts-booking-form'
-import { ChevronRight, PackageCheck, Truck, BadgeCheck, Layers } from 'lucide-react'
+import { PackageCheck, Truck, BadgeCheck, Layers } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Запчасти',
@@ -15,19 +16,48 @@ export const metadata: Metadata = {
 const categories = [
   {
     title: 'Фильтры',
-    items: ['Масляный фильтр', 'Воздушный фильтр', 'Топливный фильтр', 'Фильтр салона', 'Фильтр АКПП'],
+    items: [
+      'Масляный фильтр',
+      'Воздушный фильтр',
+      'Топливный фильтр',
+      'Фильтр салона',
+      'Фильтр АКПП',
+    ],
   },
   {
     title: 'Расходные материалы',
-    items: ['Масло двигателя (оригинал/Castrol)', 'Антифриз и охлаждающие жидкости', 'Тормозная жидкость', 'Масло для АКПП / вариатора', 'Масло для МКПП'],
+    items: [
+      'Масло двигателя',
+      'Масло для АКПП / вариатора',
+      'Масло для МКПП',
+      'Трансмиссионные масла',
+      'Жидкость для гидроподвески',
+      'Жидкость для гидроусилителя',
+      'Антифриз и охлаждающие жидкости',
+      'Тормозная жидкость',
+    ],
   },
   {
     title: 'Тормозная система',
-    items: ['Тормозные колодки', 'Тормозные диски', 'Тормозные барабаны', 'Суппорта и цилиндры', 'Тормозные шланги и трубки'],
+    items: [
+      'Тормозные колодки',
+      'Тормозные диски',
+      'Тормозные барабаны',
+      'Суппорта и цилиндры',
+      'Тормозные шланги и трубки',
+    ],
   },
   {
     title: 'Ходовая часть',
-    items: ['Амортизаторы', 'Пружины подвески', 'Шаровые опоры', 'Рычаги подвески', 'Стойки и втулки стабилизатора'],
+    items: [
+      'Амортизаторы',
+      'Пружины подвески',
+      'Шаровые опоры',
+      'Рычаги подвески',
+      'Стойки и втулки стабилизатора',
+      'Сайлент-блоки',
+      'Узлы и агрегаты рулевого управления',
+    ],
   },
   {
     title: 'Кузов',
@@ -35,15 +65,33 @@ const categories = [
   },
   {
     title: 'Двигатель',
-    items: ['Свечи зажигания NGK/Denso', 'Ремни ГРМ и навесного', 'Ролики и натяжители', 'Прокладки и сальники', 'Помпа водяного насоса'],
+    items: [
+      'Свечи зажигания NGK/Denso',
+      'Ремни ГРМ и навесного',
+      'Ролики и натяжители',
+      'Прокладки и сальники',
+      'Насос системы охлаждения',
+    ],
   },
   {
     title: 'Электрика',
-    items: ['Аккумуляторы Panasonic/Optima', 'Генераторы и стартеры', 'Датчики (ABS, кислородные)', 'Лампы и предохранители', 'Провода и реле'],
+    items: [
+      'Аккумуляторы',
+      'Генераторы и стартеры',
+      'Датчики и выключатели',
+      'Лампы и предохранители',
+      'Провода и реле',
+    ],
   },
   {
     title: 'Шины и диски',
-    items: ['Летние и зимние шины', 'Стальные диски', 'Литые диски', 'Колпаки и гайки', 'Вентили и балансировочные грузы'],
+    items: [
+      'Летние и зимние шины',
+      'Стальные диски',
+      'Литые диски',
+      'Колпаки и гайки',
+      'Вентили и балансировочные грузы',
+    ],
   },
 ]
 
@@ -75,32 +123,22 @@ export default function SparePartsPage() {
     <div className="min-h-screen">
       <Navbar />
 
-      {/* Header */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/images/spare-parts.jpg"
-            alt="Запчасти для автомобилей"
-            fill
-            priority
-            loading="eager"
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-background/85" />
-        </div>
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
-            <Link href="/" prefetch={false} className="hover:text-primary transition-colors">Главная</Link>
-            <ChevronRight className="w-4 h-4" />
-            <span className="text-foreground">Запчасти</span>
-          </div>
-          <p className="text-xs font-medium text-primary uppercase tracking-widest mb-3">Оригинал и аналоги</p>
-          <h1 className="text-5xl sm:text-6xl font-black text-foreground text-balance max-w-2xl">
-            Запасные<br />
+      <PageBanner
+        image="/images/spare-parts.jpg"
+        imageAlt="Запчасти для автомобилей"
+        eyebrow="Оригинал и аналоги"
+        title={
+          <>
+            Запасные
+            <br />
             <span className="text-primary">части для авто</span>
-          </h1>
-        </div>
-      </section>
+          </>
+        }
+        crumbs={[
+          { label: 'Главная', href: '/' },
+          { label: 'Запчасти' },
+        ]}
+      />
 
       {/* Advantages */}
       <section className="py-16 bg-primary">
@@ -120,7 +158,7 @@ export default function SparePartsPage() {
       {/* Categories */}
       <section className="py-20 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-14">
+          <div className="mb-14 text-center">
             <p className="text-xs font-medium text-primary uppercase tracking-widest mb-2">Ассортимент</p>
             <h2 className="text-4xl font-black text-foreground text-balance">Категории запчастей</h2>
           </div>
@@ -146,7 +184,7 @@ export default function SparePartsPage() {
       </section>
 
       {/* Info block */}
-      <section className="py-20 bg-card border-y border-border">
+      <section className="border-y border-border bg-[#1c1c1c] py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>

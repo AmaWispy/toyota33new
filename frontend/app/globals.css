@@ -97,4 +97,96 @@
   .text-dim { color: var(--text-dim); }
   .text-subtle { color: var(--text-subtle); }
   .border-subtle { border-color: var(--border); }
+
+  /* Hero title white underlay — horizontal scale by viewport */
+  .hero-title-bg {
+    width: 125vw;
+    height: clamp(7.5rem, 18vw, 14.625rem);
+  }
+  @media (min-width: 400px) {
+    .hero-title-bg {
+      width: min(92vw, 1200px);
+    }
+  }
+  @media (min-width: 1920px) {
+    .hero-title-bg {
+      width: 80vw;
+    }
+  }
+  @media (min-width: 2560px) {
+    .hero-title-bg {
+      width: 76vw;
+    }
+  }
+
+  .about-banner-gradient {
+    display: none;
+  }
+
+  @media (max-width: 1679px) {
+    .about-banner-gradient {
+      display: block;
+      background: linear-gradient(
+        to left,
+        rgba(3, 3, 3, 0.92) 0%,
+        rgba(3, 3, 3, 0.78) 28%,
+        rgba(3, 3, 3, 0.45) 55%,
+        transparent 82%
+      );
+    }
+  }
+
+  /* Page banner title underlay — from left edge; 927px @ 1920 (Vector.svg) */
+  .page-title-bg {
+    width: min(100vw, 380px);
+  }
+  @media (min-width: 480px) {
+    .page-title-bg {
+      width: min(88vw, 500px);
+    }
+  }
+  @media (min-width: 768px) {
+    .page-title-bg {
+      width: min(78vw, 640px);
+    }
+  }
+  @media (min-width: 1024px) {
+    .page-title-bg {
+      width: min(70vw, 760px);
+    }
+  }
+  @media (min-width: 1440px) {
+    .page-title-bg {
+      width: min(58vw, 860px);
+    }
+  }
+  @media (min-width: 1920px) {
+    .page-title-bg {
+      width: 927px;
+    }
+  }
+
+  @keyframes brands-marquee {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  .brands-marquee-track {
+    animation: brands-marquee 40s linear infinite;
+    will-change: transform;
+  }
+
+  .brands-marquee-track:hover {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .brands-marquee-track {
+      animation: none;
+    }
+  }
 }

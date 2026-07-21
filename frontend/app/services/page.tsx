@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import Link from 'next/link'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
+import { PageBanner } from '@/components/page-banner'
 import { BookingForm } from '@/components/booking-form'
 import {
   Wrench,
@@ -25,13 +25,13 @@ const serviceCategories = [
     slug: 'maintenance',
     icon: Wrench,
     title: 'Регламентные работы (ТО)',
-    desc: 'Техническое обслуживание для любых марок автомобилей. Используем оригинальные масла, фильтры и расходные материалы. Выдаём сервисную книжку.',
+    desc: 'Техническое обслуживание любых марок автомобилей. Используем оригинальные и качественные альтернативные масла, фильтры и расходные материалы. Выдаём сервисную книжку.',
     items: [
       'ТО-1, ТО-2, ТО-3 и последующие',
       'Замена масла и фильтров',
       'Замена свечей зажигания',
       'Проверка и замена ремней ГРМ',
-      'Проверка и регулировка тормозов',
+      'Проверка и обслуживание тормозной системы',
       'Проверка ходовой части',
     ],
   },
@@ -67,14 +67,13 @@ const serviceCategories = [
     slug: 'chassis',
     icon: Gauge,
     title: 'Ходовая часть',
-    desc: 'Диагностика и ремонт подвески, рулевого управления и тормозной системы. Компьютерный развал-схождение после каждого ремонта.',
+    desc: 'Диагностика и ремонт подвески, рулевого управления и тормозной системы.',
     items: [
       'Замена амортизаторов',
       'Замена шаровых и рычагов',
       'Ремонт рулевой рейки',
       'Замена ступичных подшипников',
       'Ремонт тормозной системы',
-      'Компьютерный развал-схождение',
     ],
   },
   {
@@ -85,7 +84,6 @@ const serviceCategories = [
     items: [
       'Диагностика системы',
       'Заправка фреоном',
-      'Ремонт компрессора',
       'Замена радиатора кондиционера',
       'Дезинфекция кондиционера',
       'Дезинфекция салона',
@@ -95,14 +93,13 @@ const serviceCategories = [
     slug: 'tires',
     icon: Disc,
     title: 'Шиномонтаж и балансировка',
-    desc: 'Шиномонтаж, балансировка колёс, ремонт шин. Сезонное хранение шин с возможностью маркировки.',
+    desc: 'Шиномонтаж, балансировка колёс, ремонт шин.',
     items: [
       'Монтаж и демонтаж шин',
       'Балансировка колёс',
       'Ремонт проколов',
       'Замена вентилей',
       'Сезонная замена колёс',
-      'Сезонное хранение шин',
     ],
   },
 ]
@@ -112,30 +109,22 @@ export default function ServicesPage() {
     <div className="min-h-screen">
       <Navbar />
 
-      {/* Page Header */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/images/diagnostics.jpg"
-            alt="Диагностика автомобиля"
-            fill
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-background/85" />
-        </div>
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
-            <Link href="/" prefetch={false} className="hover:text-primary transition-colors">Главная</Link>
-            <ChevronRight className="w-4 h-4" />
-            <span className="text-foreground">Услуги</span>
-          </div>
-          <p className="text-xs font-medium text-primary uppercase tracking-widest mb-3">Все марки автомобилей</p>
-          <h1 className="text-5xl sm:text-6xl font-black text-foreground text-balance max-w-2xl">
-            Все виды<br />
+      <PageBanner
+        image="/images/diagnostics.jpg"
+        imageAlt="Диагностика автомобиля"
+        eyebrow="Все марки автомобилей"
+        title={
+          <>
+            Все виды
+            <br />
             <span className="text-primary">ремонта и ТО</span>
-          </h1>
-        </div>
-      </section>
+          </>
+        }
+        crumbs={[
+          { label: 'Главная', href: '/' },
+          { label: 'Услуги' },
+        ]}
+      />
 
       {/* Services Grid */}
       <section className="py-20 bg-background">
@@ -165,7 +154,7 @@ export default function ServicesPage() {
                     </li>
                   ))}
                 </ul>
-                <div className="mt-auto flex items-center gap-1 text-xs font-medium text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="mt-auto flex items-center gap-1 text-xs font-medium text-primary">
                   Подробнее <ChevronRight className="w-3 h-3" />
                 </div>
               </Link>

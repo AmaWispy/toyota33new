@@ -1,10 +1,10 @@
 'use client'
 
-import Link from 'next/link'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
+import { PageBanner } from '@/components/page-banner'
 import { BookingForm } from '@/components/booking-form'
-import { Phone, MapPin, Clock, Mail, ChevronRight, MessageCircle } from 'lucide-react'
+import { Phone, MapPin, Clock, Mail, MessageCircle, ChevronRight } from 'lucide-react'
 
 const locations = [
   {
@@ -53,21 +53,22 @@ export default function ContactsPage() {
     <div className="min-h-screen">
       <Navbar />
 
-      {/* Header */}
-      <section className="pt-32 pb-16 bg-background border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
-            <Link href="/" prefetch={false} className="hover:text-primary transition-colors">Главная</Link>
-            <ChevronRight className="w-4 h-4" />
-            <span className="text-foreground">Контакты</span>
-          </div>
-          <p className="text-xs font-medium text-primary uppercase tracking-widest mb-3">Свяжитесь с нами</p>
-          <h1 className="text-5xl sm:text-6xl font-black text-foreground text-balance max-w-2xl">
-            Контакты<br />
-            <span className="text-primary">и адреса</span>
-          </h1>
-        </div>
-      </section>
+      <PageBanner
+        image="/images/service-bay.jpg"
+        imageAlt="Автосервис тойота33"
+        eyebrow="Свяжитесь с нами"
+        title={
+          <>
+            Контакты
+            <br />
+            и адреса
+          </>
+        }
+        crumbs={[
+          { label: 'Главная', href: '/' },
+          { label: 'Контакты' },
+        ]}
+      />
 
       {/* Quick contacts bar */}
       <section className="bg-primary py-6">

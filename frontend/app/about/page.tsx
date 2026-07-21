@@ -3,48 +3,14 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
-import { Award, Users, Wrench, ShieldCheck, Clock, ChevronRight, ArrowRight } from 'lucide-react'
+import { PageBanner } from '@/components/page-banner'
+import { Award, Users, Wrench, ShieldCheck, Clock, ArrowRight } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'О компании',
   description:
     'История ЛМС-АВТО и автосервиса Тойота33 во Владимире: от специализации Toyota–Lexus до обслуживания всех марок. Команда, этапы развития, оборудование и подход к ремонту.',
 }
-
-const team = [
-  {
-    name: 'Алексей Морозов',
-    role: 'Главный механик',
-    exp: '18 лет опыта',
-    spec: 'Двигатели и трансмиссии',
-  },
-  {
-    name: 'Дмитрий Власов',
-    role: 'Специалист по электрике',
-    exp: '12 лет опыта',
-    spec: 'Электронные системы, диагностика',
-  },
-  {
-    name: 'Сергей Никитин',
-    role: 'Мастер кузовного цеха',
-    exp: '15 лет опыта',
-    spec: 'Кузовной ремонт, покраска',
-  },
-  {
-    name: 'Олег Степанов',
-    role: 'Мастер-приёмщик',
-    exp: '10 лет опыта',
-    spec: 'Консультации, контроль качества',
-  },
-]
-
-const milestones = [
-  { year: '2003', text: 'Основание компании ЛМС-АВТО как специализированного сервиса японских автомобилей.' },
-  { year: '2010', text: 'Открытие второй площадки. Расширение штата до 15 специалистов.' },
-  { year: '2016', text: 'Открытие специализированного кузовного цеха с современной покрасочной камерой.' },
-  { year: '2020', text: 'Расширение до третьей площадки. Переход на обслуживание всех марок автомобилей.' },
-  { year: '2024', text: 'Более 5000 довольных клиентов. Обновление парка диагностического оборудования.' },
-]
 
 const values = [
   { icon: Award, title: 'Экспертиза', desc: 'Наши механики — выпускники официальных дилерских центров с сертификатами производителей.' },
@@ -60,69 +26,80 @@ export default function AboutPage() {
     <div className="min-h-screen">
       <Navbar />
 
-      {/* Header */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/images/about-team.jpg"
-            alt="Команда тойота33"
-            fill
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-background/85" />
-        </div>
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
-            <Link href="/" prefetch={false} className="hover:text-primary transition-colors">Главная</Link>
-            <ChevronRight className="w-4 h-4" />
-            <span className="text-foreground">О нас</span>
-          </div>
-          <p className="text-xs font-medium text-primary uppercase tracking-widest mb-3">ЛМС-АВТО с 2003 года</p>
-          <h1 className="text-5xl sm:text-6xl font-black text-foreground text-balance max-w-2xl">
-            Кто мы <br />
+      <PageBanner
+        image="/images/about-team.jpg"
+        imageAlt="Команда тойота33"
+        eyebrow="Тойота33 с 2016 года"
+        title={
+          <>
+            Кто мы
+            <br />
             <span className="text-primary">и что нас отличает</span>
-          </h1>
-        </div>
-      </section>
+          </>
+        }
+        crumbs={[
+          { label: 'Главная', href: '/' },
+          { label: 'О нас' },
+        ]}
+      />
 
       {/* Main story */}
-      <section className="py-24 bg-background">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <p className="text-xs font-medium text-primary uppercase tracking-widest mb-3">Наша история</p>
-              <h2 className="text-4xl font-black text-foreground mb-6 text-balance">
+      <section className="relative overflow-hidden py-24 lg:min-h-[766px] lg:py-[97px]">
+        <div className="absolute inset-0 z-0 bg-[#030303]">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/about-story-bg.svg"
+            alt=""
+            className="h-full w-full object-cover object-left"
+          />
+        </div>
+        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
+            <div className="flex flex-col gap-3">
+              <p className="text-xs font-medium uppercase tracking-widest text-primary">Наша история</p>
+              <h2 className="text-4xl font-black leading-tight text-balance text-[#eef0f0]">
                 Из дилерского центра — в независимый сервис
               </h2>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                Компания ЛМС-АВТО основана в 2003 году специалистами с богатым опытом работы в официальных дилерских центрах. Мы ушли, чтобы предложить клиентам то же качество обслуживания — но по честным ценам без дилерских наценок.
+              <p className="mt-3 leading-relaxed text-white">
+                Наша компания основана в 2016 году специалистами с богатым опытом работы в официальных дилерских центрах. Мы ушли, чтобы предложить клиентам то же качество обслуживания — но по честным ценам без дилерских наценок.
               </p>
-              <p className="text-muted-foreground leading-relaxed mb-4">
+              <p className="leading-relaxed text-white">
                 Начав как специализированный сервис японских автомобилей, мы постепенно расширили свои компетенции. Сегодня мы работаем с полным спектром японских и европейских марок: Toyota, Lexus, Honda, Nissan, Mitsubishi, Mazda, Subaru, Ford, Volkswagen и многими другими.
               </p>
-              <p className="text-muted-foreground leading-relaxed mb-8">
-                Три современные площадки во Владимире позволяют нам обслуживать клиентов оперативно и без очередей. Парк профессионального оборудования регулярно обновляется.
+              <p className="mb-5 leading-relaxed text-white">
+                Две современные площадки во Владимире позволяют нам обслуживать клиентов оперативно и без очередей.
               </p>
-              <div className="grid grid-cols-3 gap-6">
-                {[
-                  { n: '20+', l: 'Лет на рынке' },
-                  { n: '5000+', l: 'Авто в год' },
-                  { n: '3', l: 'Площадки' },
-                ].map((s) => (
-                  <div key={s.n} className="text-center p-4 bg-white/10 border border-border rounded-sm">
-                    <div className="text-3xl font-black text-primary">{s.n}</div>
-                    <div className="text-xs text-muted-foreground mt-1 uppercase tracking-wider">{s.l}</div>
+              <div className="flex flex-wrap gap-5">
+                <div className="flex h-[90px] min-w-[140px] flex-1 flex-col items-center justify-center rounded-[2px] border border-[#1b1b1b] bg-white px-4 text-center">
+                  <div className="text-3xl font-black text-[#070707]">10+</div>
+                  <div className="mt-1 text-xs text-[#070707]">Лет на рынке</div>
+                </div>
+                <div className="flex h-[90px] min-w-[140px] flex-1 flex-col items-center justify-center rounded-[2px] border border-[#1b1b1b] bg-white px-4 text-center">
+                  <div className="text-3xl font-black text-[#070707]">5000+</div>
+                  <div className="mt-1 text-xs text-[#070707]">Авто в год</div>
+                </div>
+                <Link
+                  href="/interesting"
+                  prefetch={false}
+                  className="relative h-[90px] w-full shrink-0 rounded-[2px] border border-[#111] transition-colors hover:border-primary/50 sm:w-[241px]"
+                >
+                  <div className="absolute top-[17px] left-[13px] w-[186px] text-center">
+                    <div className="text-[30px] font-black leading-9 text-[#f8f8f8]">Интересное</div>
                   </div>
-                ))}
+                  <div className="absolute top-[54px] left-[18px] w-[175px] text-center text-[15px] leading-4 text-[#f8f8f8]">
+                    в повседневной работе
+                  </div>
+                  <ArrowRight className="absolute top-1/2 right-3 h-[25px] w-[25px] -translate-y-1/2 text-white" strokeWidth={1.33} />
+                </Link>
               </div>
             </div>
             <div className="relative">
               <Image
                 src="/images/service-bay.jpg"
                 alt="Наш сервис"
-                width={600}
-                height={500}
-                className="rounded-sm object-cover w-full aspect-[4/3]"
+                width={576}
+                height={432}
+                className="aspect-[4/3] w-full rounded-[2px] object-cover"
               />
             </div>
           </div>
@@ -152,70 +129,21 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Timeline */}
-      <section className="py-24 bg-background">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
-            <p className="text-xs font-medium text-primary uppercase tracking-widest mb-2">История</p>
-            <h2 className="text-4xl font-black text-foreground text-balance">Вехи развития</h2>
-          </div>
-          <div className="relative">
-            <div className="absolute left-16 top-0 bottom-0 w-px bg-border" />
-            <div className="flex flex-col gap-8">
-              {milestones.map((m) => (
-                <div key={m.year} className="flex gap-8 items-start">
-                  <div className="w-16 shrink-0 flex flex-col items-center gap-2">
-                    <span className="text-sm font-black text-primary">{m.year}</span>
-                    <div className="w-2.5 h-2.5 rounded-full bg-primary ring-4 ring-background mt-0.5" />
-                  </div>
-                  <div className="flex-1 pb-8">
-                    <p className="text-muted-foreground leading-relaxed text-sm pt-0.5">{m.text}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Team */}
-      <section className="py-24 bg-card border-t border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
-            <p className="text-xs font-medium text-primary uppercase tracking-widest mb-2">Люди</p>
-            <h2 className="text-4xl font-black text-foreground text-balance">Наша команда</h2>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {team.map((member) => (
-              <div key={member.name} className="flex flex-col p-6 bg-white/10 border border-border rounded-sm text-center">
-                <div className="w-16 h-16 rounded-full bg-secondary border border-border flex items-center justify-center mx-auto mb-4">
-                  <Users className="w-7 h-7 text-muted-foreground" />
-                </div>
-                <h3 className="font-bold text-foreground text-sm">{member.name}</h3>
-                <p className="text-xs text-primary font-medium mt-1 mb-2">{member.role}</p>
-                <p className="text-xs text-muted-foreground">{member.exp}</p>
-                <p className="text-xs text-muted-foreground mt-0.5">{member.spec}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* CTA */}
-      <section className="py-20 bg-primary">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-black text-primary-foreground mb-4 text-balance">
+      <section className="bg-[#0f0f0f] py-20">
+        <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
+          <h2 className="mb-4 text-4xl font-black text-balance text-[#f8f8f8]">
             Готовы доверить нам свой автомобиль?
           </h2>
-          <p className="text-primary-foreground/80 mb-8 max-w-xl mx-auto">
+          <p className="mx-auto mb-8 max-w-xl text-[#f8f8f8]/80">
             Записывайтесь на диагностику — первый осмотр бесплатно. Мы оценим состояние автомобиля и дадим честные рекомендации.
           </p>
           <Link
             href="/contacts#booking"
             prefetch={false}
-            className="inline-flex items-center gap-2 px-8 py-4 bg-primary-foreground text-primary font-bold rounded-sm hover:bg-primary-foreground/90 transition-colors"
+            className="inline-flex items-center gap-2 rounded-[2px] bg-primary px-8 py-4 font-bold text-white transition-colors hover:bg-primary/90"
           >
-            Записаться <ArrowRight className="w-4 h-4" />
+            Записаться <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
       </section>

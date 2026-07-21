@@ -1,13 +1,13 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
+import { PageBanner } from '@/components/page-banner'
 import { BookingForm } from '@/components/booking-form'
 import { 
   Wrench, Zap, Settings, Gauge, Thermometer, Disc, 
-  ChevronRight, ShieldCheck, Clock, Award, CheckCircle2 
+  ShieldCheck, Clock, Award, CheckCircle2 
 } from 'lucide-react'
 
 const servicesData = {
@@ -15,7 +15,7 @@ const servicesData = {
     icon: Wrench,
     title: 'Регламентные работы (ТО)',
     desc: 'Техническое обслуживание для любых марок автомобилей. Используем оригинальные масла, фильтры и расходные материалы.',
-    image: '/images/maintenance-detail.jpg',
+    image: '/images/service-bay.jpg',
     items: [
       'ТО-1, ТО-2, ТО-3 и последующие',
       'Замена масла и фильтров',
@@ -35,7 +35,7 @@ const servicesData = {
     icon: Zap,
     title: 'Двигатель и его системы',
     desc: 'Диагностика, капитальный и текущий ремонт двигателей японских и европейских автомобилей.',
-    image: '/images/engine-detail.jpg',
+    image: '/images/diagnostics.jpg',
     items: [
       'Компьютерная диагностика',
       'Ремонт головки блока цилиндров',
@@ -55,7 +55,7 @@ const servicesData = {
     icon: Settings,
     title: 'Трансмиссия',
     desc: 'Ремонт всех видов трансмиссий: МКПП, АКПП, роботизированные КПП, вариаторы CVT.',
-    image: '/images/transmission-detail.jpg',
+    image: '/images/service-bay.jpg',
     items: [
       'Ремонт МКПП',
       'Ремонт АКПП',
@@ -75,7 +75,7 @@ const servicesData = {
     icon: Gauge,
     title: 'Ходовая часть',
     desc: 'Диагностика и ремонт подвески, рулевого управления и тормозной системы.',
-    image: '/images/chassis-detail.jpg',
+    image: '/images/diagnostics.jpg',
     items: [
       'Замена амортизаторов',
       'Замена шаровых и рычагов',
@@ -95,7 +95,7 @@ const servicesData = {
     icon: Thermometer,
     title: 'Кондиционер',
     desc: 'Диагностика, заправка и ремонт систем кондиционирования и климат-контроля.',
-    image: '/images/ac-detail.jpg',
+    image: '/images/body-repair.jpg',
     items: [
       'Диагностика системы',
       'Заправка фреоном',
@@ -115,7 +115,7 @@ const servicesData = {
     icon: Disc,
     title: 'Шиномонтаж и балансировка',
     desc: 'Шиномонтаж, балансировка колёс, ремонт шин. Сезонное хранение.',
-    image: '/images/tires-detail.jpg',
+    image: '/images/spare-parts.jpg',
     items: [
       'Монтаж и демонтаж шин',
       'Балансировка колёс',
@@ -167,39 +167,18 @@ export default async function ServicePage({ params }: { params: { slug: string }
     <div className="min-h-screen">
       <Navbar />
 
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src={service.image}
-            alt={service.title}
-            fill
-            className="object-cover opacity-20"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/0 via-background/80 to-background" />
-        </div>
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
-            <Link href="/" prefetch={false} className="hover:text-primary transition-colors">Главная</Link>
-            <ChevronRight className="w-4 h-4" />
-            <Link href="/services" prefetch={false} className="hover:text-primary transition-colors">Услуги</Link>
-            <ChevronRight className="w-4 h-4" />
-            <span className="text-foreground">{service.title}</span>
-          </div>
-          <div className="flex items-center gap-4 mb-4">
-            <div className="w-12 h-12 bg-primary/20 flex items-center justify-center rounded-sm">
-              <service.icon className="w-6 h-6 text-primary" />
-            </div>
-            <p className="text-xs font-medium text-primary uppercase tracking-widest">Профессиональный сервис</p>
-          </div>
-          <h1 className="text-4xl sm:text-6xl font-black text-foreground text-balance max-w-3xl mb-6">
-            {service.title}
-          </h1>
-          <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl">
-            {service.desc}
-          </p>
-        </div>
-      </section>
+      <PageBanner
+        image={service.image}
+        imageAlt={service.title}
+        eyebrow="Профессиональный сервис"
+        title={service.title}
+        description={service.desc}
+        crumbs={[
+          { label: 'Главная', href: '/' },
+          { label: 'Услуги', href: '/services' },
+          { label: service.title },
+        ]}
+      />
 
       {/* Details & Items */}
       <section className="py-20 bg-background">

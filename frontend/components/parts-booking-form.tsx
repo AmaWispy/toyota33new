@@ -144,7 +144,7 @@ export function PartsBookingForm({ className }: { className?: string }) {
         </p>
       )}
       <p className="text-xs text-muted-foreground">
-        * — поля обязательные к заполнению. Заявки обрабатываются в рабочее время Пн–Пт с 8:00 до 18:00.
+        * — поля обязательные к заполнению. Заявки обрабатываются в рабочее время Пн–Пт с 9:00 до 18:00.
       </p>
       <button
         type="submit"

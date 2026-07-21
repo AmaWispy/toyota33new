@@ -18,6 +18,10 @@ export const metadata: Metadata = {
     'Тойота33 (ЛМС-АВТО), Владимир: ремонт и обслуживание японских и европейских автомобилей. ТО, диагностика, трансмиссия, ходовая, кондиционер, шиномонтаж. Более 20 лет опыта, 3 площадки. Онлайн-запись.',
   keywords:
     'автосервис, ремонт авто, Владимир, ТО, диагностика, японские автомобили, Toyota, Honda, Nissan, ЛМС-АВТО',
+  icons: {
+    icon: [{ url: '/icon.svg', type: 'image/svg+xml' }],
+    apple: [{ url: '/apple-icon.svg', type: 'image/svg+xml' }],
+  },
 }
 
 export default function RootLayout({

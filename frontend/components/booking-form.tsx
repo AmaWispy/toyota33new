@@ -163,7 +163,7 @@ export function BookingForm({ className }: { className?: string }) {
         </p>
       )}
       <p className="text-xs text-muted-foreground">
-        * — поля обязательные к заполнению. Запрос обрабатывается в течение часа Пн–Пт с 8:00 до 18:00.
+        * — поля обязательные к заполнению. Запрос обрабатывается в течение часа Пн–Пт с 9:00 до 18:00.
       </p>
       <button
         type="submit"

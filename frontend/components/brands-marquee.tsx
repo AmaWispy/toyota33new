@@ -1,68 +1,58 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-
 const brands = [
-  'Toyota', 'Lexus', 'Honda', 'Nissan', 'Mitsubishi',
-  'Mazda', 'Subaru', 'Suzuki', 'Ford', 'Hyundai',
-  'Kia', 'Renault', 'Volkswagen', 'Skoda',
+  'Toyota',
+  'Lexus',
+  'Honda',
+  'Nissan',
+  'Mitsubishi',
+  'Mazda',
+  'Subaru',
+  'Suzuki',
+  'Ford',
+  'Hyundai',
+  'Kia',
+  'Renault',
+  'Volkswagen',
+  'Skoda',
 ]
 
-export function BrandsMarquee() {
-  const [isMounted, setIsMounted] = useState(false)
-
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
-
-  if (!isMounted) return null
-
-  // Дублируем бренды для бесконечного эффекта
-  const displayBrands = [...brands, ...brands, ...brands]
-
+function BrandRow({ ariaHidden }: { ariaHidden?: boolean }) {
   return (
-    <div className="w-full overflow-hidden bg-card border-y border-border py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <p className="text-xs font-medium text-muted-foreground uppercase tracking-widest text-center mb-8">
+    <div
+      className="flex shrink-0 items-center"
+      aria-hidden={ariaHidden || undefined}
+    >
+      {brands.map((brand) => (
+        <div
+          key={brand}
+          className="flex shrink-0 items-center justify-center px-3 sm:px-4 lg:px-6"
+        >
+          <span className="cursor-default whitespace-nowrap text-sm font-bold text-foreground/80 transition-colors hover:text-foreground sm:text-base lg:text-xl">
+            {brand}
+          </span>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+export function BrandsMarquee() {
+  return (
+    <div className="w-full overflow-hidden border-y border-border bg-card py-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <p className="mb-8 text-center text-xs font-medium uppercase tracking-widest text-muted-foreground">
           Обслуживаем все популярные марки
         </p>
-        
+
         <div className="relative overflow-hidden">
-          {/* Маска слева и справа для плавного исчезновения */}
-          <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-card to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-card to-transparent z-10 pointer-events-none" />
+          <div className="pointer-events-none absolute bottom-0 left-0 top-0 z-10 w-12 bg-gradient-to-r from-card to-transparent" />
+          <div className="pointer-events-none absolute bottom-0 right-0 top-0 z-10 w-12 bg-gradient-to-l from-card to-transparent" />
 
-          {/* Бесконечный слайдер */}
-          <style>{`
-            @keyframes marquee {
-              0% {
-                transform: translateX(0);
-              }
-              100% {
-                transform: translateX(-${100 / 3}%);
-              }
-            }
-            .marquee-track {
-              display: flex;
-              animation: marquee 30s linear infinite;
-              width: 300%;
-            }
-            .marquee-track:hover {
-              animation-play-state: paused;
-            }
-          `}</style>
-
-          <div className="marquee-track">
-            {displayBrands.map((brand, idx) => (
-              <div
-                key={`${brand}-${idx}`}
-                className="flex-shrink-0 px-3 sm:px-4 lg:px-6 flex items-center justify-center"
-              >
-                <span className="text-sm sm:text-base lg:text-xl font-bold text-foreground/80 whitespace-nowrap hover:text-foreground transition-colors cursor-default">
-                  {brand}
-                </span>
-              </div>
-            ))}
+          {/* Два одинаковых ряда: сдвиг ровно на 50% = бесшовный цикл */}
+          <div className="brands-marquee-track flex w-max">
+            <BrandRow />
+            <BrandRow ariaHidden />
           </div>
         </div>
       </div>
