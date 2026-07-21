@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { cn } from '@/lib/utils'
 import { PatternFormat } from 'react-number-format'
 
@@ -9,28 +9,48 @@ type FormData = {
   phone: string
   service: string
   message: string
-  website: string // Honeypot field
+  company_fax: string // Honeypot — must stay empty
 }
 
+const emptyForm = (): FormData => ({
+  name: '',
+  phone: '',
+  service: '',
+  message: '',
+  company_fax: '',
+})
+
 export function BookingForm({ className }: { className?: string }) {
-  const [form, setForm] = useState<FormData>({ name: '', phone: '', service: '', message: '', website: '' })
+  const [form, setForm] = useState<FormData>(emptyForm)
+  const [formTs, setFormTs] = useState(() => Math.floor(Date.now() / 1000))
   const [submitted, setSubmitted] = useState(false)
 
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    setFormTs(Math.floor(Date.now() / 1000))
+  }, [])
+
+  const resetForm = () => {
+    setForm(emptyForm())
+    setFormTs(Math.floor(Date.now() / 1000))
+    setSubmitted(false)
+    setError(null)
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
     setError(null)
 
-    let apiUrl = process.env.NEXT_PUBLIC_API_URL;
-    
+    let apiUrl = process.env.NEXT_PUBLIC_API_URL
+
     if (!apiUrl && typeof window !== 'undefined') {
       if (window.location.hostname === 'toyota.ameliq.ru') {
-        apiUrl = 'https://toyota-admin.ameliq.ru';
+        apiUrl = 'https://toyota-admin.ameliq.ru'
       } else {
-        apiUrl = 'http://localhost:8000';
+        apiUrl = 'http://localhost:8000'
       }
     }
 
@@ -39,17 +59,19 @@ export function BookingForm({ className }: { className?: string }) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json',
+          Accept: 'application/json',
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, form_ts: formTs }),
       })
 
       if (response.ok) {
         setSubmitted(true)
+      } else if (response.status === 429) {
+        setError('Слишком много заявок. Попробуйте позже.')
       } else {
         setError('Произошла ошибка при отправке заявки. Попробуйте позже.')
       }
-    } catch (err) {
+    } catch {
       setError('Ошибка сети. Проверьте подключение.')
     } finally {
       setIsLoading(false)
@@ -69,7 +91,7 @@ export function BookingForm({ className }: { className?: string }) {
           Ваш запрос будет обработан в течение часа. Мы свяжемся с вами по телефону.
         </p>
         <button
-          onClick={() => setSubmitted(false)}
+          onClick={resetForm}
           className="text-sm text-primary hover:underline mt-2"
         >
           Отправить ещё одну заявку
@@ -79,7 +101,7 @@ export function BookingForm({ className }: { className?: string }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className={cn('flex flex-col gap-4', className)}>
+    <form onSubmit={handleSubmit} className={cn('relative flex flex-col gap-4', className)}>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="flex flex-col gap-1.5">
           <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
@@ -146,14 +168,27 @@ export function BookingForm({ className }: { className?: string }) {
         />
       </div>
 
-      {/* Honeypot field (hidden from humans) */}
-      <div className="hidden">
-        <input 
-          type="text" 
-          value={form.website} 
-          onChange={(e) => setForm({ ...form, website: e.target.value })} 
-          tabIndex={-1} 
-          autoComplete="off" 
+      {/* Honeypot — off-screen, not display:none */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          left: '-9999px',
+          top: 'auto',
+          width: '1px',
+          height: '1px',
+          overflow: 'hidden',
+        }}
+      >
+        <label htmlFor="booking-company-fax">Company fax</label>
+        <input
+          id="booking-company-fax"
+          type="text"
+          name="company_fax"
+          value={form.company_fax}
+          onChange={(e) => setForm({ ...form, company_fax: e.target.value })}
+          tabIndex={-1}
+          autoComplete="off"
         />
       </div>
 

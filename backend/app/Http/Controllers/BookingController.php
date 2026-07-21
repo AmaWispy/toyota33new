@@ -8,11 +8,25 @@ use Illuminate\Http\Request;
 
 class BookingController extends Controller
 {
+    private const MIN_FORM_SECONDS = 3;
+    private const MAX_FORM_SECONDS = 3600; // 1 hour
+
     public function store(Request $request)
     {
-        // Bot protection: Honeypot
-        if ($request->filled('website')) {
+        // Bot protection: Honeypot (must stay empty)
+        if ($request->filled('company_fax')) {
             return response()->json(['error' => 'Bot detected'], 422);
+        }
+
+        // Bot protection: reject instant / stale submissions
+        $formTs = $request->input('form_ts');
+        if (! is_numeric($formTs)) {
+            return response()->json(['error' => 'Invalid form token'], 422);
+        }
+
+        $elapsed = time() - (int) $formTs;
+        if ($elapsed < self::MIN_FORM_SECONDS || $elapsed > self::MAX_FORM_SECONDS) {
+            return response()->json(['error' => 'Invalid form token'], 422);
         }
 
         $validated = $request->validate([

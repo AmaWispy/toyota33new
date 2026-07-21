@@ -4,26 +4,17 @@ import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
 import { PageBanner } from '@/components/page-banner'
 import { BookingForm } from '@/components/booking-form'
-import { Phone, MapPin, Clock, Mail, MessageCircle, ChevronRight } from 'lucide-react'
+import { Phone, MapPin, Clock, Mail, ChevronRight } from 'lucide-react'
 
-const locations = [
-  {
-    name: 'Основная площадка',
-    address: 'г. Владимир, ул. 2-й Почаевский пр-зд, д. 20',
-    phone: '+7 (904) 9 555 444',
-    hours: 'Пн–Пт: 8:00–18:00, Сб: 9:00–15:00',
-    note: 'Все виды ремонта и ТО',
-    mapSrc: 'https://yandex.ru/map-widget/v1/?ll=40.3736%2C56.1292&z=16&pt=40.3736,56.1292,pm2rdl',
-  },
-  {
-    name: 'Кузовной цех',
-    address: 'г. Владимир, ул. Промышленная, д. 14',
-    phone: '+7 (904) 955-54-45',
-    hours: 'Пн–Пт: 8:00–17:00',
-    note: 'Кузовной ремонт и покраска',
-    mapSrc: 'https://yandex.ru/map-widget/v1/?ll=40.3736%2C56.1292&z=16&pt=40.3736,56.1292,pm2rdl',
-  },
-]
+const MAP_URL = 'https://yandex.ru/maps/-/CTV2bNN9'
+
+const location = {
+  name: 'Основная площадка',
+  address: 'г. Владимир, ул. Промышленный проезд, 5Б',
+  phone: '+7 (904) 9 555 444',
+  hours: 'Пн–Пт: 9:00–18:00',
+  note: 'Все виды ремонта и ТО',
+}
 
 const faq = [
   {
@@ -61,7 +52,7 @@ export default function ContactsPage() {
           <>
             Контакты
             <br />
-            и адреса
+            <span className="text-primary">и адреса</span>
           </>
         }
         crumbs={[
@@ -81,84 +72,78 @@ export default function ContactsPage() {
                 <div className="font-bold">+7 (904) 9 555 444</div>
               </div>
             </a>
-            <a href="mailto:info@avto33.com" className="flex items-center gap-3 text-primary-foreground hover:text-primary-foreground/80 transition-colors">
+            <a href="mailto:j-car33@yandex.ru" className="flex items-center gap-3 text-primary-foreground hover:text-primary-foreground/80 transition-colors">
               <Mail className="w-5 h-5" />
               <div>
                 <div className="text-xs opacity-70 uppercase tracking-wider">Email</div>
-                <div className="font-bold">info@avto33.com</div>
+                <div className="font-bold">j-car33@yandex.ru</div>
               </div>
             </a>
             <div className="flex items-center gap-3 text-primary-foreground">
               <Clock className="w-5 h-5" />
               <div>
                 <div className="text-xs opacity-70 uppercase tracking-wider">Режим работы</div>
-                <div className="font-bold">Пн–Пт: 8:00–18:00, Сб: 9:00–15:00</div>
+                <div className="font-bold">Пн–Пт: 9:00–18:00</div>
               </div>
             </div>
-            {/* <a
-              href="https://wa.me/79049555444"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-5 py-2.5 bg-primary-foreground text-primary font-bold text-sm rounded-sm hover:bg-primary-foreground/90 transition-colors"
-            >
-              <MessageCircle className="w-4 h-4" />
-              WhatsApp
-            </a> */}
           </div>
         </div>
       </section>
 
       {/* Locations */}
-      <section className="py-20 bg-background">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-12">
-            <p className="text-xs font-medium text-primary uppercase tracking-widest mb-2">Адреса</p>
-            <h2 className="text-4xl font-black text-foreground text-balance">Наши площадки</h2>
+      <section className="bg-background py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-12 text-center">
+            <p className="mb-2 text-xs font-medium uppercase tracking-widest text-primary">Адреса</p>
+            <h2 className="text-4xl font-black text-balance text-foreground">Наши площадки</h2>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {locations.map((loc) => (
-              <div key={loc.name} className="flex flex-col bg-white/10 border border-border rounded-sm overflow-hidden">
-                <div className="h-52 bg-secondary border-b border-border flex items-center justify-center relative overflow-hidden">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center">
-                      <MapPin className="w-10 h-10 text-primary mx-auto mb-2" />
-                      <p className="text-sm font-medium text-foreground">{loc.address}</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="p-6 flex flex-col gap-4">
-                  <div>
-                    <h3 className="font-bold text-foreground text-lg">{loc.name}</h3>
-                    <p className="text-xs text-primary font-medium uppercase tracking-wider mt-0.5">{loc.note}</p>
-                  </div>
-                  <ul className="flex flex-col gap-3">
-                    <li className="flex items-start gap-2.5">
-                      <MapPin className="w-4 h-4 text-primary mt-0.5 shrink-0" />
-                      <span className="text-sm text-muted-foreground">{loc.address}</span>
-                    </li>
-                    <li className="flex items-center gap-2.5">
-                      <Phone className="w-4 h-4 text-primary shrink-0" />
-                      <a href={`tel:${loc.phone.replace(/\D/g, '')}`} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                        {loc.phone}
-                      </a>
-                    </li>
-                    <li className="flex items-center gap-2.5">
-                      <Clock className="w-4 h-4 text-primary shrink-0" />
-                      <span className="text-sm text-muted-foreground">{loc.hours}</span>
-                    </li>
-                  </ul>
-                  <a
-                    href={`https://yandex.ru/maps/?text=${encodeURIComponent(loc.address)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline"
-                  >
-                    Открыть в Яндекс.Картах
-                    <ChevronRight className="w-4 h-4" />
-                  </a>
-                </div>
+
+          <div className="mx-auto max-w-[818px] overflow-hidden rounded-[2px] border border-[#1b1b1b] bg-white/10">
+            <div className="flex h-[208px] items-center justify-center border-b border-[#1b1b1b] bg-[#111]">
+              <div className="flex flex-col items-center gap-2 px-4 text-center">
+                <MapPin className="h-10 w-10 text-primary" strokeWidth={2.5} />
+                <p className="text-sm font-medium text-[#eef0f0]">{location.address}</p>
               </div>
-            ))}
+            </div>
+
+            <div className="flex flex-col gap-4 p-6">
+              <div>
+                <h3 className="text-lg font-bold text-[#eef0f0]">{location.name}</h3>
+                <p className="mt-0.5 text-xs font-medium uppercase tracking-wider text-primary">
+                  {location.note}
+                </p>
+              </div>
+
+              <ul className="flex flex-col gap-3">
+                <li className="flex items-start gap-2.5">
+                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                  <span className="text-sm text-[#717171]">{location.address}</span>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <Phone className="h-4 w-4 shrink-0 text-primary" />
+                  <a
+                    href="tel:+79049555444"
+                    className="text-sm text-[#717171] transition-colors hover:text-foreground"
+                  >
+                    {location.phone}
+                  </a>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <Clock className="h-4 w-4 shrink-0 text-primary" />
+                  <span className="text-sm text-[#717171]">{location.hours}</span>
+                </li>
+              </ul>
+
+              <a
+                href={MAP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline"
+              >
+                Открыть в Яндекс.Картах
+                <ChevronRight className="h-4 w-4" />
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -186,27 +171,13 @@ export default function ContactsPage() {
                     <div className="text-xs text-muted-foreground">+7 (904) 9 555 444</div>
                   </div>
                 </a>
-                <a
-                  href="https://wa.me/79049555444"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 text-foreground hover:text-primary transition-colors"
-                >
-                  <div className="w-9 h-9 bg-primary/10 rounded-sm flex items-center justify-center shrink-0">
-                    <MessageCircle className="w-4 h-4 text-primary" />
-                  </div>
-                  <div>
-                    <div className="text-sm font-semibold">WhatsApp</div>
-                    <div className="text-xs text-muted-foreground">Написать в мессенджер</div>
-                  </div>
-                </a>
-                <a href="mailto:info@avto33.com" className="flex items-center gap-3 text-foreground hover:text-primary transition-colors">
+                <a href="mailto:j-car33@yandex.ru" className="flex items-center gap-3 text-foreground hover:text-primary transition-colors">
                   <div className="w-9 h-9 bg-primary/10 rounded-sm flex items-center justify-center shrink-0">
                     <Mail className="w-4 h-4 text-primary" />
                   </div>
                   <div>
                     <div className="text-sm font-semibold">Email</div>
-                    <div className="text-xs text-muted-foreground">info@avto33.com</div>
+                    <div className="text-xs text-muted-foreground">j-car33@yandex.ru</div>
                   </div>
                 </a>
               </div>

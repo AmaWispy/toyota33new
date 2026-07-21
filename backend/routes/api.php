@@ -7,8 +7,8 @@ Route::middleware('web')->group(function () {
     Route::get('/chat/history', [ChatController::class, 'getHistory']);
     Route::post('/chat/send', [ChatController::class, 'sendMessage'])->middleware('throttle:10,1');
     
-    // Бронирования (Заявки) с лимитом 1 в минуту
-    Route::post('/bookings', [\App\Http\Controllers\BookingController::class, 'store'])->middleware('throttle:1,1');
+    // Бронирования (Заявки): максимум 5 заявок с одного IP за час
+    Route::post('/bookings', [\App\Http\Controllers\BookingController::class, 'store'])->middleware('throttle:5,60');
     
     // Админские маршруты
     Route::get('/admin/chats', [ChatController::class, 'getAllChats']);

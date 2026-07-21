@@ -35,8 +35,8 @@ class ChatController extends Controller
 
     public function sendMessage(Request $request)
     {
-        // Bot protection: Honeypot
-        if ($request->filled('website')) {
+        // Bot protection: Honeypot (must stay empty)
+        if ($request->filled('company_fax')) {
             return response()->json(['error' => 'Bot detected'], 422);
         }
 
