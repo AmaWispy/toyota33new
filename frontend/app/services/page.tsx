@@ -173,7 +173,7 @@ export default function ServicesPage() {
                 Записаться на сервис
               </h2>
               <p className="text-muted-foreground leading-relaxed">
-                Оставьте заявку — мы перезвоним в течение часа и согласуем удобное время.
+                Оставьте заявку — мы перезвоним в течение рабочего дня и согласуем удобное время.
               </p>
             </div>
             <div className="bg-white/10 border border-border rounded-sm p-8">

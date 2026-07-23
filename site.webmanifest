@@ -1,0 +1,15 @@
+{
+  "name": "Тойота33",
+  "short_name": "Тойота33",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "theme_color": "#E4032E",
+  "background_color": "#E4032E",
+  "display": "standalone"
+}

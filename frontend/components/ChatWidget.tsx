@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { MessageCircle, X, Send, Loader2 } from 'lucide-react';
+import { getApiBaseUrl } from '@/lib/api';
 
 interface Message {
   id?: number;
@@ -49,15 +50,7 @@ export default function ChatWidget() {
   }, [messages]);
 
   const fetchHistory = async (sid: string) => {
-    let apiUrl = process.env.NEXT_PUBLIC_API_URL;
-    
-    if (!apiUrl && typeof window !== 'undefined') {
-      if (window.location.hostname === 'toyota.ameliq.ru') {
-        apiUrl = 'https://toyota-admin.ameliq.ru';
-      } else {
-        apiUrl = 'http://localhost:8000';
-      }
-    }
+    const apiUrl = getApiBaseUrl();
 
     try {
       const response = await fetch(`${apiUrl}/api/chat/history`, {
@@ -86,15 +79,7 @@ export default function ChatWidget() {
     setMessages(prev => [...prev, { role: 'user', content: userMsg }]);
     setIsLoading(true);
 
-    let apiUrl = process.env.NEXT_PUBLIC_API_URL;
-    
-    if (!apiUrl && typeof window !== 'undefined') {
-      if (window.location.hostname === 'toyota.ameliq.ru') {
-        apiUrl = 'https://toyota-admin.ameliq.ru';
-      } else {
-        apiUrl = 'http://localhost:8000';
-      }
-    }
+    const apiUrl = getApiBaseUrl();
 
     try {
       const response = await fetch(`${apiUrl}/api/chat/send`, {

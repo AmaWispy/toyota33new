@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react'
 import { cn } from '@/lib/utils'
 import { PatternFormat } from 'react-number-format'
+import { FormConsent } from '@/components/form-consent'
+import { getApiBaseUrl } from '@/lib/api'
 
 type FormData = {
   name: string
@@ -22,6 +24,8 @@ export function PartsBookingForm({ className }: { className?: string }) {
   const [form, setForm] = useState<FormData>(emptyForm)
   const [formTs, setFormTs] = useState(() => Math.floor(Date.now() / 1000))
   const [submitted, setSubmitted] = useState(false)
+  const [privacy, setPrivacy] = useState(false)
+  const [personalData, setPersonalData] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -34,22 +38,20 @@ export function PartsBookingForm({ className }: { className?: string }) {
     setFormTs(Math.floor(Date.now() / 1000))
     setSubmitted(false)
     setError(null)
+    setPrivacy(false)
+    setPersonalData(false)
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!privacy || !personalData) {
+      setError('Необходимо принять Политику конфиденциальности и дать согласие на обработку персональных данных.')
+      return
+    }
     setIsLoading(true)
     setError(null)
 
-    let apiUrl = process.env.NEXT_PUBLIC_API_URL
-
-    if (!apiUrl && typeof window !== 'undefined') {
-      if (window.location.hostname === 'toyota.ameliq.ru') {
-        apiUrl = 'https://toyota-admin.ameliq.ru'
-      } else {
-        apiUrl = 'http://localhost:8000'
-      }
-    }
+    const apiUrl = getApiBaseUrl()
 
     try {
       const response = await fetch(`${apiUrl}/api/bookings`, {
@@ -89,7 +91,7 @@ export function PartsBookingForm({ className }: { className?: string }) {
         </div>
         <h3 className="text-xl font-bold text-foreground">Заявка принята!</h3>
         <p className="text-muted-foreground text-sm max-w-sm">
-          Ваш запрос на запчасти будет обработан в ближайшее время. Мы свяжемся с вами для уточнения деталей и стоимости.
+          Ваш запрос на запчасти будет обработан в течение рабочего дня. Мы свяжемся с вами для уточнения деталей и стоимости.
         </p>
         <button
           onClick={resetForm}
@@ -149,6 +151,15 @@ export function PartsBookingForm({ className }: { className?: string }) {
         />
       </div>
 
+      <FormConsent
+        idPrefix="parts"
+        privacy={privacy}
+        personalData={personalData}
+        onPrivacyChange={setPrivacy}
+        onPersonalDataChange={setPersonalData}
+        disabled={isLoading}
+      />
+
       {/* Honeypot — off-screen, not display:none */}
       <div
         aria-hidden="true"
@@ -179,11 +190,11 @@ export function PartsBookingForm({ className }: { className?: string }) {
         </p>
       )}
       <p className="text-xs text-muted-foreground">
-        * — поля обязательные к заполнению. Заявки обрабатываются в рабочее время Пн–Пт с 9:00 до 18:00.
+        * — поля обязательные к заполнению. Заявки обрабатываются в течение рабочего дня Пн–Пт с 9:00 до 18:00.
       </p>
       <button
         type="submit"
-        disabled={isLoading}
+        disabled={isLoading || !privacy || !personalData}
         className="w-full py-3.5 bg-primary text-primary-foreground font-semibold text-sm rounded-sm hover:bg-primary/90 transition-colors tracking-wide uppercase disabled:opacity-50 flex items-center justify-center gap-2"
       >
         {isLoading ? 'Отправка...' : 'Заказать запчасти'}

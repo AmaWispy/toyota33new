@@ -24,6 +24,8 @@ return [
         'http://localhost:8000',
         'https://toyota.ameliq.ru',
         'https://toyota-admin.ameliq.ru',
+        'https://toyota33.com',
+        'https://www.toyota33.com',
     ],
 
     'allowed_origins_patterns' => [],

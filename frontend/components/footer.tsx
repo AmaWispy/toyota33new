@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { Phone, MapPin, Clock, Mail } from 'lucide-react'
 import { Logo } from '@/components/logo'
+import { ProtectedEmail } from '@/components/protected-email'
 
 const services = [
   { href: '/services/maintenance', label: 'Техническое обслуживание' },
@@ -11,7 +12,7 @@ const services = [
   { href: '/spare-parts', label: 'Подбор и продажа запасных частей' },
 ]
 
-const MAP_URL = 'https://yandex.ru/maps/-/CTV2bNN9'
+const MAP_URL = 'https://yandex.ru/maps/-/CTbJnHnC'
 
 export function Footer() {
   return (
@@ -57,7 +58,7 @@ export function Footer() {
                     rel="noopener noreferrer"
                     className="text-sm leading-snug text-white transition-colors hover:text-primary"
                   >
-                    г. Владимир, ул. Промышленный проезд 5 Б
+                    г. Владимир, ул. Промышленный проезд, 5Б
                   </a>
                 </li>
                 <li className="flex items-center gap-2.5">
@@ -75,14 +76,25 @@ export function Footer() {
                 </li>
                 <li className="flex items-center gap-2.5">
                   <Mail className="h-4 w-4 shrink-0 text-primary" />
-                  <a
-                    href="mailto:j-car33@yandex.ru"
-                    className="text-sm text-white transition-colors hover:text-primary"
-                  >
-                    j-car33@yandex.ru
-                  </a>
+                  <ProtectedEmail className="text-sm text-white transition-colors hover:text-primary" />
                 </li>
               </ul>
+              <div className="mt-2 flex flex-col gap-2">
+                <Link
+                  href="/privacy"
+                  prefetch={false}
+                  className="text-sm text-white/70 transition-colors hover:text-primary"
+                >
+                  Политика конфиденциальности
+                </Link>
+                <Link
+                  href="/personal-data"
+                  prefetch={false}
+                  className="text-sm text-white/70 transition-colors hover:text-primary"
+                >
+                  Согласие на обработку ПДн
+                </Link>
+              </div>
             </div>
           </div>
         </div>

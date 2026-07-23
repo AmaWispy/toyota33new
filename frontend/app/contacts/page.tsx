@@ -4,9 +4,10 @@ import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
 import { PageBanner } from '@/components/page-banner'
 import { BookingForm } from '@/components/booking-form'
-import { Phone, MapPin, Clock, Mail, ChevronRight } from 'lucide-react'
+import { Phone, MapPin, Clock, Mail } from 'lucide-react'
+import { ProtectedEmail } from '@/components/protected-email'
 
-const MAP_URL = 'https://yandex.ru/maps/-/CTV2bNN9'
+const MAP_URL = 'https://yandex.ru/maps/-/CTbJnHnC'
 
 const location = {
   name: 'Основная площадка',
@@ -72,13 +73,13 @@ export default function ContactsPage() {
                 <div className="font-bold">+7 (904) 9 555 444</div>
               </div>
             </a>
-            <a href="mailto:j-car33@yandex.ru" className="flex items-center gap-3 text-primary-foreground hover:text-primary-foreground/80 transition-colors">
-              <Mail className="w-5 h-5" />
+            <div className="flex items-center gap-3 text-primary-foreground">
+              <Mail className="h-5 w-5" />
               <div>
-                <div className="text-xs opacity-70 uppercase tracking-wider">Email</div>
-                <div className="font-bold">j-car33@yandex.ru</div>
+                <div className="text-xs uppercase tracking-wider opacity-70">Email</div>
+                <ProtectedEmail className="font-bold" label="Написать" />
               </div>
-            </a>
+            </div>
             <div className="flex items-center gap-3 text-primary-foreground">
               <Clock className="w-5 h-5" />
               <div>
@@ -101,7 +102,7 @@ export default function ContactsPage() {
           <div className="mx-auto max-w-[818px] overflow-hidden rounded-[2px] border border-[#1b1b1b] bg-white/10">
             <div className="flex h-[208px] items-center justify-center border-b border-[#1b1b1b] bg-[#111]">
               <div className="flex flex-col items-center gap-2 px-4 text-center">
-                <MapPin className="h-10 w-10 text-primary" strokeWidth={2.5} />
+                <MapPin className="h-20 w-20 text-primary" strokeWidth={0.75} />
                 <p className="text-sm font-medium text-[#eef0f0]">{location.address}</p>
               </div>
             </div>
@@ -138,10 +139,9 @@ export default function ContactsPage() {
                 href={MAP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline"
+                className="mt-2 flex w-full items-center justify-center rounded-[2px] bg-primary px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-primary-foreground transition-colors hover:bg-primary/90"
               >
-                Открыть в Яндекс.Картах
-                <ChevronRight className="h-4 w-4" />
+                Проложить маршрут
               </a>
             </div>
           </div>
@@ -158,7 +158,7 @@ export default function ContactsPage() {
                 Записаться на ремонт
               </h2>
               <p className="text-muted-foreground leading-relaxed mb-8">
-                Оставьте заявку — мы перезвоним в течение часа и согласуем удобное время. Принимаем заявки круглосуточно.
+                Оставьте заявку — мы перезвоним в течение рабочего дня и согласуем удобное время. Принимаем заявки круглосуточно.
               </p>
               <div className="flex flex-col gap-4 p-6 bg-background border border-border rounded-sm">
                 <p className="text-xs font-medium text-muted-foreground uppercase tracking-widest">Также доступны</p>
@@ -171,15 +171,15 @@ export default function ContactsPage() {
                     <div className="text-xs text-muted-foreground">+7 (904) 9 555 444</div>
                   </div>
                 </a>
-                <a href="mailto:j-car33@yandex.ru" className="flex items-center gap-3 text-foreground hover:text-primary transition-colors">
-                  <div className="w-9 h-9 bg-primary/10 rounded-sm flex items-center justify-center shrink-0">
-                    <Mail className="w-4 h-4 text-primary" />
+                <div className="flex items-center gap-3 text-foreground">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-sm bg-primary/10">
+                    <Mail className="h-4 w-4 text-primary" />
                   </div>
                   <div>
-                    <div className="text-sm font-semibold">Email</div>
-                    <div className="text-xs text-muted-foreground">j-car33@yandex.ru</div>
+                    <ProtectedEmail className="text-sm font-semibold" label="Написать" />
+                    <div className="text-xs text-muted-foreground">Электронная почта</div>
                   </div>
-                </a>
+                </div>
               </div>
             </div>
             <div className="bg-secondary border border-border rounded-sm p-8">

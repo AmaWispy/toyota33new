@@ -9,7 +9,7 @@ import { Award, Users, Wrench, ShieldCheck, Clock, ArrowRight } from 'lucide-rea
 export const metadata: Metadata = {
   title: 'О компании',
   description:
-    'История ЛМС-АВТО и автосервиса Тойота33 во Владимире: от специализации Toyota–Lexus до обслуживания всех марок. Команда, этапы развития, оборудование и подход к ремонту.',
+    'История автосервиса Тойота33 во Владимире: от специализации Toyota–Lexus до обслуживания всех марок. Команда, этапы развития, оборудование и подход к ремонту.',
 }
 
 const values = [
@@ -67,7 +67,7 @@ export default function AboutPage() {
                 Начав как специализированный сервис японских автомобилей, мы постепенно расширили свои компетенции. Сегодня мы работаем с полным спектром японских и европейских марок: Toyota, Lexus, Honda, Nissan, Mitsubishi, Mazda, Subaru, Ford, Volkswagen и многими другими.
               </p>
               <p className="mb-5 leading-relaxed text-white">
-                Две современные площадки во Владимире позволяют нам обслуживать клиентов оперативно и без очередей.
+                Современная площадка во Владимире позволяет нам обслуживать клиентов оперативно и без очередей.
               </p>
               <div className="flex flex-wrap gap-5">
                 <div className="flex h-[90px] min-w-[140px] flex-1 flex-col items-center justify-center rounded-[2px] border border-[#1b1b1b] bg-white px-4 text-center">
