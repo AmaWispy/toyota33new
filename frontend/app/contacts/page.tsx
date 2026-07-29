@@ -101,10 +101,15 @@ export default function ContactsPage() {
 
           <div className="mx-auto max-w-[818px] overflow-hidden rounded-[2px] border border-[#1b1b1b] bg-white/10">
             <div className="flex h-[208px] items-center justify-center border-b border-[#1b1b1b] bg-[#111]">
-              <div className="flex flex-col items-center gap-2 px-4 text-center">
+              <a
+                href={MAP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-col items-center gap-2 px-4 text-center transition-opacity hover:opacity-80"
+              >
                 <MapPin className="h-20 w-20 text-primary" strokeWidth={0.75} />
                 <p className="text-sm font-medium text-[#eef0f0]">{location.address}</p>
-              </div>
+              </a>
             </div>
 
             <div className="flex flex-col gap-4 p-6">

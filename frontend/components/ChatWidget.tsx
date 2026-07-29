@@ -1,8 +1,10 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { MessageCircle, X, Send, Loader2 } from 'lucide-react';
+import { MessageCircle, X, Send, Loader2, MapPin } from 'lucide-react';
 import { getApiBaseUrl } from '@/lib/api';
+
+const MAP_URL = 'https://yandex.ru/maps/-/CTbJnHnC';
 
 interface Message {
   id?: number;
@@ -107,7 +109,20 @@ export default function ChatWidget() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+      {/* Map — above chat */}
+      {!isOpen && (
+        <a
+          href={MAP_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Проложить маршрут на Яндекс Картах"
+          className="flex items-center justify-center rounded-full bg-white p-3 text-primary shadow-lg transition-all duration-300 hover:bg-white/90 group"
+        >
+          <MapPin size={36} className="group-hover:scale-110 transition-transform duration-300" />
+        </a>
+      )}
+
       {/* Chat Toggle Button */}
       {!isOpen && (
         <div className="relative">
