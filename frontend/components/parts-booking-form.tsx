@@ -5,6 +5,11 @@ import { cn } from '@/lib/utils'
 import { PatternFormat } from 'react-number-format'
 import { FormConsent } from '@/components/form-consent'
 import { getApiBaseUrl } from '@/lib/api'
+import {
+  BOOKING_LIMITS,
+  SPAM_LINK_ERROR,
+  containsSpamLinks,
+} from '@/lib/booking-form'
 
 type FormData = {
   name: string
@@ -28,6 +33,7 @@ export function PartsBookingForm({ className }: { className?: string }) {
   const [personalData, setPersonalData] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const spamDetected = containsSpamLinks(form.name, form.message)
 
   useEffect(() => {
     setFormTs(Math.floor(Date.now() / 1000))
@@ -46,6 +52,22 @@ export function PartsBookingForm({ className }: { className?: string }) {
     e.preventDefault()
     if (!privacy || !personalData) {
       setError('Необходимо принять Политику конфиденциальности и дать согласие на обработку персональных данных.')
+      return
+    }
+    if (form.name.trim().length < BOOKING_LIMITS.name.min) {
+      setError(`Укажите имя — минимум ${BOOKING_LIMITS.name.min} символа.`)
+      return
+    }
+    if (form.phone.replace(/\D/g, '').length < 10) {
+      setError('Укажите полный номер телефона.')
+      return
+    }
+    if (form.message.trim().length < BOOKING_LIMITS.partsMessage.min) {
+      setError(`Опишите запчасти или VIN — минимум ${BOOKING_LIMITS.partsMessage.min} символов.`)
+      return
+    }
+    if (containsSpamLinks(form.name, form.message)) {
+      setError(SPAM_LINK_ERROR)
       return
     }
     setIsLoading(true)
@@ -72,7 +94,12 @@ export function PartsBookingForm({ className }: { className?: string }) {
       } else if (response.status === 429) {
         setError('Слишком много заявок. Попробуйте позже.')
       } else {
-        setError('Произошла ошибка при отправке заявки. Попробуйте позже.')
+        const data = await response.json().catch(() => null)
+        setError(
+          typeof data?.error === 'string'
+            ? data.error
+            : 'Произошла ошибка при отправке заявки. Попробуйте позже.',
+        )
       }
     } catch {
       setError('Ошибка сети. Проверьте подключение.')
@@ -113,6 +140,8 @@ export function PartsBookingForm({ className }: { className?: string }) {
           <input
             required
             type="text"
+            minLength={BOOKING_LIMITS.name.min}
+            maxLength={BOOKING_LIMITS.name.max}
             placeholder="Ваше имя"
             value={form.name}
             disabled={isLoading}
@@ -143,12 +172,17 @@ export function PartsBookingForm({ className }: { className?: string }) {
         <textarea
           rows={4}
           required
+          minLength={BOOKING_LIMITS.partsMessage.min}
+          maxLength={BOOKING_LIMITS.partsMessage.max}
           placeholder="Напишите список необходимых запчастей или VIN номер автомобиля для точного подбора..."
           value={form.message}
           disabled={isLoading}
           onChange={(e) => setForm({ ...form, message: e.target.value })}
           className="px-4 py-3 bg-white/10 border border-border rounded-sm text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-colors resize-none disabled:opacity-50"
         />
+        <p className="text-right text-[11px] text-muted-foreground">
+          {form.message.length}/{BOOKING_LIMITS.partsMessage.max}
+        </p>
       </div>
 
       <FormConsent
@@ -184,18 +218,18 @@ export function PartsBookingForm({ className }: { className?: string }) {
         />
       </div>
 
-      {error && (
-        <p className="text-xs text-red-500 font-medium">
-          {error}
-        </p>
-      )}
+      {spamDetected ? (
+        <p className="text-xs font-medium text-red-500">{SPAM_LINK_ERROR}</p>
+      ) : error ? (
+        <p className="text-xs font-medium text-red-500">{error}</p>
+      ) : null}
       <p className="text-xs text-muted-foreground">
         * — поля обязательные к заполнению. Заявки обрабатываются в течение рабочего дня Пн–Пт с 9:00 до 18:00.
       </p>
       <button
         type="submit"
-        disabled={isLoading || !privacy || !personalData}
-        className="w-full py-3.5 bg-primary text-primary-foreground font-semibold text-sm rounded-sm hover:bg-primary/90 transition-colors tracking-wide uppercase disabled:opacity-50 flex items-center justify-center gap-2"
+        disabled={isLoading || !privacy || !personalData || spamDetected}
+        className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-sm bg-primary py-3.5 text-sm font-semibold uppercase tracking-wide text-primary-foreground transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
       >
         {isLoading ? 'Отправка...' : 'Заказать запчасти'}
       </button>

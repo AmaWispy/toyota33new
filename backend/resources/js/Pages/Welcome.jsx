@@ -1,6 +1,11 @@
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import { Head, Link } from '@inertiajs/react';
 
+function copyrightYears(startYear = 2016) {
+    const currentYear = new Date().getFullYear();
+    return currentYear > startYear ? `${startYear}–${currentYear}` : String(startYear);
+}
+
 export default function Welcome({ auth }) {
     return (
         <>
@@ -54,7 +59,7 @@ export default function Welcome({ auth }) {
                 </main>
 
                 <footer className="relative z-10 px-6 py-6 text-center text-xs text-white/40 sm:px-10">
-                    © Тойота33 · toyota33.com
+                    © {copyrightYears()} Тойота33 · toyota33.com
                 </footer>
             </div>
         </>

@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Phone, MapPin, Clock, Mail } from 'lucide-react'
 import { Logo } from '@/components/logo'
 import { ProtectedEmail } from '@/components/protected-email'
+import { CopyrightYears } from '@/components/copyright-years'
 
 const services = [
   { href: '/services/maintenance', label: 'Техническое обслуживание' },
@@ -103,7 +104,7 @@ export function Footer() {
       <div className="border-t border-border bg-card py-6">
         <div className="mx-auto flex max-w-[1188px] flex-col items-center justify-between gap-4 px-4 sm:flex-row sm:px-6 lg:px-0">
           <p className="text-xs text-muted-foreground">
-            © Тойота33. Все права защищены.
+            © <CopyrightYears /> Тойота33. Все права защищены.
           </p>
           <p className="text-xs text-muted-foreground">г. Владимир</p>
           <p className="text-xs text-muted-foreground">
