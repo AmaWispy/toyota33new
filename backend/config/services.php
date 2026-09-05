@@ -40,4 +40,8 @@ return [
         'token' => env('TIMEWEB_AI_TOKEN'),
     ],
 
+    'smartcaptcha' => [
+        'secret' => env('YANDEX_SMARTCAPTCHA_SECRET'),
+    ],
+
 ];

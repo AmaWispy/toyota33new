@@ -325,8 +325,16 @@ export default function Dashboard({ tab = 'chats', shouldShowCreateForm = false 
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap">
                                                         <div className="text-sm font-bold text-gray-900">{booking.name}</div>
-                                                        <div className="text-sm text-blue-600 font-medium">{booking.phone}</div>
-                                                        {booking.email && <div className="text-[10px] text-gray-400">{booking.email}</div>}
+                                                        <div className="text-[10px] uppercase tracking-wide text-gray-400">
+                                                            {booking.contact_method === 'max' ? 'Макс' : booking.contact_method === 'email' ? 'Email' : booking.contact_method === 'other' ? 'Другое' : 'Телефон'}
+                                                        </div>
+                                                        <div className="text-sm text-blue-600 font-medium">
+                                                            {booking.contact_method === 'email'
+                                                                ? booking.email
+                                                                : booking.contact_method === 'other'
+                                                                    ? booking.contact_other
+                                                                    : booking.phone}
+                                                        </div>
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                         {booking.service || 'Не указана'}

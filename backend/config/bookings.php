@@ -18,6 +18,7 @@ return [
         'name' => ['min' => 2, 'max' => 80],
         'phone' => ['min' => 10, 'max' => 32],
         'email' => ['max' => 255],
+        'contact_other' => ['min' => 2, 'max' => 120],
         'service' => ['max' => 80],
         'message' => ['max' => 1500],
     ],

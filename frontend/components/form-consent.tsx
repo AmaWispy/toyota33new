@@ -70,6 +70,18 @@ export function FormConsent({
           <span className="text-primary"> *</span>
         </span>
       </label>
+
+      <p className="text-xs leading-snug text-muted-foreground/80">
+        Формы защищены{' '}
+        <a
+          href="https://yandex.ru/legal/smartcaptcha_notice"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-primary underline-offset-2 hover:underline"
+        >
+          Yandex SmartCaptcha
+        </a>
+      </p>
     </div>
   )
 }

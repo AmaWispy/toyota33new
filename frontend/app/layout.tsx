@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import ChatWidget from '@/components/ChatWidget'
+import { YandexMetrika } from '@/components/yandex-metrika'
 
 const inter = Inter({
   subsets: ['latin', 'cyrillic'],
@@ -36,6 +37,7 @@ export default function RootLayout({
       <body className="font-sans antialiased bg-background text-foreground">
         {children}
         <ChatWidget />
+        <YandexMetrika />
       </body>
     </html>
   )

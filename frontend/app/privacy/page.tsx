@@ -63,9 +63,23 @@ export default function PrivacyPage() {
               <p>В зависимости от взаимодействия с Сайтом могут обрабатываться:</p>
               <ul className="list-disc space-y-1 pl-5">
                 <li>имя;</li>
-                <li>номер телефона;</li>
+                <li>номер телефона, email или иной указанный способ связи;</li>
                 <li>сведения из текста заявки (описание работ, VIN, перечень запчастей и т.п.);</li>
-                <li>технические данные (IP-адрес, сведения о браузере, дата и время обращения) — в объёме, необходимом для работы Сайта и защиты от злоупотреблений.</li>
+                <li>технические данные (IP-адрес, сведения о браузере, дата и время обращения) — в объёме, необходимом для работы Сайта и защиты от злоупотреблений;</li>
+                <li>данные Яндекс.Метрики (cookie, идентификатор посетителя, сведения о просмотрах страниц) — для учёта посещаемости;</li>
+                <li>
+                  технические данные Yandex SmartCaptcha (отпечаток браузера, token и сведения об устройстве) — для
+                  защиты форм от спама; условия обработки:{' '}
+                  <a
+                    href="https://yandex.ru/legal/smartcaptcha_notice"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline"
+                  >
+                    yandex.ru/legal/smartcaptcha_notice
+                  </a>
+                  .
+                </li>
               </ul>
             </section>
 
@@ -142,9 +156,27 @@ export default function PrivacyPage() {
             <section className="flex flex-col gap-3">
               <h2 className="text-lg font-bold text-foreground">9. Файлы cookie и аналитика</h2>
               <p>
-                Сайт может использовать технические cookie и аналогичные технологии, необходимые для корректной
-                работы и учёта посещаемости. Вы можете ограничить cookie в настройках браузера; часть функций Сайта
-                при этом может работать ограниченно.
+                Сайт использует Яндекс.Метрику (счётчик 67034833), Yandex SmartCaptcha и технические cookie для учёта
+                посещаемости, вебвизора и защиты форм от спама. Вы можете ограничить cookie в настройках
+                браузера; часть функций Сайта при этом может работать ограниченно. Политика Яндекса:{' '}
+                <a
+                  href="https://yandex.ru/legal/confidential/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline"
+                >
+                  yandex.ru/legal/confidential
+                </a>
+                . Уведомление SmartCaptcha:{' '}
+                <a
+                  href="https://yandex.ru/legal/smartcaptcha_notice"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline"
+                >
+                  yandex.ru/legal/smartcaptcha_notice
+                </a>
+                .
               </p>
             </section>
 

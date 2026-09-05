@@ -54,26 +54,19 @@
                                 </tr>
                                 <tr>
                                     <td style="padding:16px 0;border-bottom:1px solid #2a2a2a;">
-                                        <p style="margin:0 0 4px;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#8a8a8a;">Телефон</p>
+                                        <p style="margin:0 0 4px;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#8a8a8a;">Способ связи</p>
+                                        <p style="margin:0 0 8px;font-size:13px;color:#9a9a9a;">{{ $booking->contactMethodLabel() }}</p>
                                         <p style="margin:0;font-size:18px;font-weight:bold;color:#eef0f0;">
-                                            @if ($telHref)
+                                            @if ($booking->contact_method === 'email' && $booking->email)
+                                                <a href="mailto:{{ $booking->email }}" style="color:#EB0028;text-decoration:none;">{{ $booking->email }}</a>
+                                            @elseif (in_array($booking->contact_method, ['phone', 'max'], true) && $telHref)
                                                 <a href="{{ $telHref }}" style="color:#EB0028;text-decoration:none;">{{ $phonePretty }}</a>
                                             @else
-                                                {{ $phonePretty }}
+                                                {{ $booking->contactDisplay() }}
                                             @endif
                                         </p>
                                     </td>
                                 </tr>
-                                @if ($booking->email)
-                                    <tr>
-                                        <td style="padding:16px 0;border-bottom:1px solid #2a2a2a;">
-                                            <p style="margin:0 0 4px;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#8a8a8a;">Email</p>
-                                            <p style="margin:0;font-size:16px;color:#eef0f0;">
-                                                <a href="mailto:{{ $booking->email }}" style="color:#EB0028;text-decoration:none;">{{ $booking->email }}</a>
-                                            </p>
-                                        </td>
-                                    </tr>
-                                @endif
                                 @if ($booking->service)
                                     <tr>
                                         <td style="padding:16px 0;border-bottom:1px solid #2a2a2a;">

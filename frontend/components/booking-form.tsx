@@ -1,19 +1,25 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { cn } from '@/lib/utils'
-import { PatternFormat } from 'react-number-format'
 import { FormConsent } from '@/components/form-consent'
+import { ContactMethodFields } from '@/components/contact-method-fields'
+import { SmartCaptcha, type SmartCaptchaHandle } from '@/components/smart-captcha'
 import { getApiBaseUrl } from '@/lib/api'
 import {
   BOOKING_LIMITS,
   SPAM_LINK_ERROR,
   containsSpamLinks,
+  type ContactMethod,
+  usesPhoneField,
 } from '@/lib/booking-form'
 
 type FormData = {
   name: string
+  contact_method: ContactMethod
   phone: string
+  email: string
+  contact_other: string
   service: string
   message: string
   company_fax: string // Honeypot — must stay empty
@@ -21,7 +27,10 @@ type FormData = {
 
 const emptyForm = (): FormData => ({
   name: '',
+  contact_method: 'phone',
   phone: '',
+  email: '',
+  contact_other: '',
   service: '',
   message: '',
   company_fax: '',
@@ -36,7 +45,14 @@ export function BookingForm({ className }: { className?: string }) {
 
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const spamDetected = containsSpamLinks(form.name, form.service, form.message)
+  const captchaRef = useRef<SmartCaptchaHandle>(null)
+  const spamDetected = containsSpamLinks(
+    form.name,
+    form.service,
+    form.message,
+    form.email,
+    form.contact_other,
+  )
 
   useEffect(() => {
     setFormTs(Math.floor(Date.now() / 1000))
@@ -49,6 +65,7 @@ export function BookingForm({ className }: { className?: string }) {
     setError(null)
     setPrivacy(false)
     setPersonalData(false)
+    captchaRef.current?.reset()
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -61,16 +78,42 @@ export function BookingForm({ className }: { className?: string }) {
       setError(`Укажите имя — минимум ${BOOKING_LIMITS.name.min} символа.`)
       return
     }
-    if (form.phone.replace(/\D/g, '').length < 10) {
-      setError('Укажите полный номер телефона.')
+    if (usesPhoneField(form.contact_method) && form.phone.replace(/\D/g, '').length < 10) {
+      setError(
+        form.contact_method === 'max'
+          ? 'Укажите полный номер телефона в Макс.'
+          : 'Укажите полный номер телефона.',
+      )
       return
     }
-    if (containsSpamLinks(form.name, form.service, form.message)) {
+    if (form.contact_method === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
+      setError('Укажите корректный email.')
+      return
+    }
+    if (form.contact_method === 'other' && form.contact_other.trim().length < BOOKING_LIMITS.contactOther.min) {
+      setError('Укажите, как с вами связаться.')
+      return
+    }
+    if (containsSpamLinks(form.name, form.service, form.message, form.email, form.contact_other)) {
       setError(SPAM_LINK_ERROR)
       return
     }
     setIsLoading(true)
     setError(null)
+
+    let smartToken = ''
+    try {
+      smartToken = await captchaRef.current?.execute() ?? ''
+    } catch {
+      setIsLoading(false)
+      setError('Не удалось пройти проверку. Попробуйте ещё раз.')
+      return
+    }
+    if (!smartToken) {
+      setIsLoading(false)
+      setError('Не удалось пройти проверку. Попробуйте ещё раз.')
+      return
+    }
 
     const apiUrl = getApiBaseUrl()
 
@@ -81,7 +124,7 @@ export function BookingForm({ className }: { className?: string }) {
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
-        body: JSON.stringify({ ...form, form_ts: formTs }),
+        body: JSON.stringify({ ...form, form_ts: formTs, smart_token: smartToken }),
       })
 
       if (response.ok) {
@@ -100,6 +143,7 @@ export function BookingForm({ className }: { className?: string }) {
       setError('Ошибка сети. Проверьте подключение.')
     } finally {
       setIsLoading(false)
+      captchaRef.current?.reset()
     }
   }
 
@@ -113,7 +157,7 @@ export function BookingForm({ className }: { className?: string }) {
         </div>
         <h3 className="text-xl font-bold text-foreground">Заявка принята!</h3>
         <p className="text-muted-foreground text-sm max-w-sm">
-          Ваш запрос будет обработан в течение рабочего дня. Мы свяжемся с вами по телефону.
+          Ваш запрос будет обработан в течение рабочего дня. Мы свяжемся с вами выбранным способом.
         </p>
         <button
           onClick={resetForm}
@@ -144,21 +188,17 @@ export function BookingForm({ className }: { className?: string }) {
             className="px-4 py-3 bg-white/10 border border-border rounded-sm text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-colors disabled:opacity-50"
           />
         </div>
-        <div className="flex flex-col gap-1.5">
-          <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-            Телефон <span className="text-primary">*</span>
-          </label>
-          <PatternFormat
-            required
-            format="+7 (###) ###-##-##"
-            mask="_"
-            placeholder="+7 (___) ___-__-__"
-            value={form.phone}
-            disabled={isLoading}
-            onValueChange={(values) => setForm({ ...form, phone: values.value })}
-            className="px-4 py-3 bg-white/10 border border-border rounded-sm text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-colors disabled:opacity-50"
-          />
-        </div>
+        <ContactMethodFields
+          method={form.contact_method}
+          phone={form.phone}
+          email={form.email}
+          contactOther={form.contact_other}
+          disabled={isLoading}
+          onMethodChange={(contact_method) => setForm({ ...form, contact_method })}
+          onPhoneChange={(phone) => setForm({ ...form, phone })}
+          onEmailChange={(email) => setForm({ ...form, email })}
+          onOtherChange={(contact_other) => setForm({ ...form, contact_other })}
+        />
       </div>
       <div className="flex flex-col gap-1.5">
         <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
@@ -207,6 +247,8 @@ export function BookingForm({ className }: { className?: string }) {
         onPersonalDataChange={setPersonalData}
         disabled={isLoading}
       />
+
+      <SmartCaptcha ref={captchaRef} />
 
       {/* Honeypot — off-screen, not display:none */}
       <div
